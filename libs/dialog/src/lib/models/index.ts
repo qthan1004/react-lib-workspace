@@ -1,5 +1,7 @@
 import type { ReactNode, HTMLAttributes } from 'react';
 
+export type ModalSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+
 export interface PortalProps {
   children: ReactNode;
   /** Container element to render portal into (default: document.body) */
@@ -13,6 +15,12 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   onClose?: () => void;
   /** Modal content */
   children?: ReactNode;
+  /** Preset size (default: 'sm') */
+  size?: ModalSize;
+  /** Custom width — overrides size preset width */
+  width?: string | number;
+  /** Custom height — overrides size preset height */
+  height?: string | number;
   /** Disable backdrop click to close */
   disableBackdropClick?: boolean;
   /** Disable ESC key to close */

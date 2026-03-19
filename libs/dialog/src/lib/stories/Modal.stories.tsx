@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Modal } from '../Modal';
+import type { ModalSize } from '../models';
 import {
   StoryButton,
   StoryButtonSecondary,
@@ -36,6 +37,67 @@ const BasicStory = () => {
   );
 };
 
+// ─── Sizes ───────────────────────────────────────────────
+
+const SIZES: ModalSize[] = ['xs', 'sm', 'md', 'lg', 'xl', 'fullscreen'];
+
+const SizesStory = () => {
+  const [activeSize, setActiveSize] = useState<ModalSize | null>(null);
+
+  return (
+    <div>
+      <StoryRow style={{ flexWrap: 'wrap', gap: 8 }}>
+        {SIZES.map((size) => (
+          <StoryButton key={size} onClick={() => setActiveSize(size)}>
+            {size.toUpperCase()}
+          </StoryButton>
+        ))}
+      </StoryRow>
+
+      {SIZES.map((size) => (
+        <Modal
+          key={size}
+          open={activeSize === size}
+          onClose={() => setActiveSize(null)}
+          size={size}
+        >
+          <StoryCard style={{ minWidth: 'unset', width: '100%', boxSizing: 'border-box' }}>
+            <StoryTitle>Size: {size.toUpperCase()}</StoryTitle>
+            <StoryText>
+              Modal với preset size <strong>{size}</strong>. Click backdrop hoặc ESC để đóng.
+            </StoryText>
+            <StoryButton onClick={() => setActiveSize(null)}>Close</StoryButton>
+          </StoryCard>
+        </Modal>
+      ))}
+    </div>
+  );
+};
+
+// ─── Custom Dimensions ───────────────────────────────────
+
+const CustomDimensionsStory = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <StoryButton onClick={() => setOpen(true)}>
+        Open Custom Size (700px × 400px)
+      </StoryButton>
+
+      <Modal open={open} onClose={() => setOpen(false)} width={700} height={400}>
+        <StoryCard style={{ minWidth: 'unset', width: '100%', height: '100%', boxSizing: 'border-box' }}>
+          <StoryTitle>Custom Dimensions</StoryTitle>
+          <StoryText>
+            Modal với width=700px và height=400px, override preset size.
+          </StoryText>
+          <StoryButton onClick={() => setOpen(false)}>Close</StoryButton>
+        </StoryCard>
+      </Modal>
+    </div>
+  );
+};
+
 // ─── Custom Content (Form) ───────────────────────────────
 
 const FormStory = () => {
@@ -45,8 +107,8 @@ const FormStory = () => {
     <div>
       <StoryButton onClick={() => setOpen(true)}>Open Form Modal</StoryButton>
 
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <StoryCard style={{ minWidth: 450 }}>
+      <Modal open={open} onClose={() => setOpen(false)} size="md">
+        <StoryCard style={{ minWidth: 'unset', width: '100%', boxSizing: 'border-box' }}>
           <StoryTitle>Form trong Modal</StoryTitle>
           <StoryColumn>
             <StoryInput type="text" placeholder="Tên" />
@@ -75,8 +137,8 @@ const NestedStory = () => {
     <div>
       <StoryButton onClick={() => setOpen1(true)}>Open First Modal</StoryButton>
 
-      <Modal open={open1} onClose={() => setOpen1(false)}>
-        <StoryCard>
+      <Modal open={open1} onClose={() => setOpen1(false)} size="lg">
+        <StoryCard style={{ minWidth: 'unset', width: '100%', boxSizing: 'border-box' }}>
           <StoryTitle>Modal 1 (z-index: 1300)</StoryTitle>
           <StoryText>
             Đây là modal đầu tiên. Mở thêm modal thứ 2 để test stacking.
@@ -95,8 +157,8 @@ const NestedStory = () => {
         </StoryCard>
       </Modal>
 
-      <Modal open={open2} onClose={() => setOpen2(false)} zIndex={1400}>
-        <StoryCard>
+      <Modal open={open2} onClose={() => setOpen2(false)} size="sm" zIndex={1400}>
+        <StoryCard style={{ minWidth: 'unset', width: '100%', boxSizing: 'border-box' }}>
           <StoryTitle>Modal 2 (z-index: 1400)</StoryTitle>
           <StoryText>
             Modal nested — z-index cao hơn để hiện trên modal 1.
@@ -111,6 +173,9 @@ const NestedStory = () => {
 // ─── Playground ──────────────────────────────────────────
 
 const PlaygroundStory = (args: {
+  size: ModalSize;
+  width: string;
+  height: string;
   disableBackdropClick: boolean;
   disableEscapeKey: boolean;
   keepMounted: boolean;
@@ -122,8 +187,17 @@ const PlaygroundStory = (args: {
       <StoryButton onClick={() => setOpen(true)}>
         Open Playground Modal
       </StoryButton>
-      <Modal open={open} onClose={() => setOpen(false)} {...args}>
-        <StoryCard>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        size={args.size}
+        width={args.width || undefined}
+        height={args.height || undefined}
+        disableBackdropClick={args.disableBackdropClick}
+        disableEscapeKey={args.disableEscapeKey}
+        keepMounted={args.keepMounted}
+      >
+        <StoryCard style={{ minWidth: 'unset', width: '100%', boxSizing: 'border-box' }}>
           <StoryTitle>Playground Modal</StoryTitle>
           <StoryText>
             Thay đổi Controls ở panel dưới để test các props.
@@ -148,6 +222,16 @@ export const Basic: StoryObj = {
   render: () => <BasicStory />,
 };
 
+export const Sizes: StoryObj = {
+  name: 'Sizes',
+  render: () => <SizesStory />,
+};
+
+export const CustomDimensions: StoryObj = {
+  name: 'Custom Dimensions',
+  render: () => <CustomDimensionsStory />,
+};
+
 export const CustomContent: StoryObj = {
   name: 'Form Content',
   render: () => <FormStory />,
@@ -159,12 +243,28 @@ export const Nested: StoryObj = {
 };
 
 export const Playground: StoryObj<{
+  size: ModalSize;
+  width: string;
+  height: string;
   disableBackdropClick: boolean;
   disableEscapeKey: boolean;
   keepMounted: boolean;
 }> = {
   name: 'Playground',
   argTypes: {
+    size: {
+      control: { type: 'select' },
+      options: ['xs', 'sm', 'md', 'lg', 'xl', 'fullscreen'],
+      description: 'Preset size',
+    },
+    width: {
+      control: 'text',
+      description: 'Custom width (e.g. "700px", "50dvw")',
+    },
+    height: {
+      control: 'text',
+      description: 'Custom height (e.g. "400px", "60dvh")',
+    },
     disableBackdropClick: {
       control: 'boolean',
       description: 'Disable close on backdrop click',
@@ -179,6 +279,9 @@ export const Playground: StoryObj<{
     },
   },
   args: {
+    size: 'sm',
+    width: '',
+    height: '',
     disableBackdropClick: false,
     disableEscapeKey: false,
     keepMounted: false,

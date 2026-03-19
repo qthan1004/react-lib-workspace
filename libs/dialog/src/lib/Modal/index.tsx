@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useTheme } from '@emotion/react';
-import type { ThemeSchema } from '@thanhdq/theme';
 
 import type { ModalProps } from '../models';
-import { DEFAULT_Z_INDEX } from '../constants';
+
 import { trapFocus } from '../helpers';
+
+import { ModalBackdropStyled, ModalContentStyled } from './styled';
+
 import { Portal } from '../Portal';
-import { ModalBackdrop, ModalContent } from './styled';
 
 /**
  * Modal — full-screen overlay with centered content.
@@ -24,6 +24,9 @@ export const Modal = ({
   open,
   onClose,
   children,
+  size = 'sm',
+  width,
+  height,
   disableBackdropClick = false,
   disableEscapeKey = false,
   zIndex,
@@ -31,10 +34,8 @@ export const Modal = ({
   container,
   ...rest
 }: ModalProps) => {
-  const theme = useTheme() as ThemeSchema;
   const contentRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
-  const resolvedZIndex = zIndex ?? theme.zIndex?.modal ?? DEFAULT_Z_INDEX;
 
   // ESC key handler
   const handleKeyDown = useCallback(
@@ -106,22 +107,25 @@ export const Modal = ({
 
   return (
     <Portal container={container}>
-      <ModalBackdrop
-        ownerZIndex={resolvedZIndex}
+      <ModalBackdropStyled
+        ownerZIndex={zIndex}
         ownerOpen={open}
         onClick={handleBackdropClick}
         {...rest}
       >
-        <ModalContent
+        <ModalContentStyled
           ref={contentRef}
           ownerOpen={open}
+          ownerSize={size}
+          ownerWidth={width}
+          ownerHeight={height}
           role="dialog"
           aria-modal="true"
           tabIndex={-1}
         >
           {children}
-        </ModalContent>
-      </ModalBackdrop>
+        </ModalContentStyled>
+      </ModalBackdropStyled>
     </Portal>
   );
 };
