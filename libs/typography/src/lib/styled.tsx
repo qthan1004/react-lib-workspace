@@ -1,6 +1,11 @@
+import { CSSObject, useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
+
+import type { ThemeSchema } from '@thanhdq/theme';
 import { pxToRem } from '@thanhdq/utils';
+
 import type { TypographyVariant } from './models';
+
 import { FALLBACK_SCALE } from './constants';
 
 interface TypographyStyledProps {
@@ -13,14 +18,20 @@ interface TypographyStyledProps {
 }
 
 export const TypographyStyled = styled.p<TypographyStyledProps>(
-  ({ theme, ownerVariant, ownerColor, ownerAlign, ownerFontWeight, ownerGutterBottom, ownerNoWrap }) => {
-    const typo = theme.typography?.[ownerVariant] ?? FALLBACK_SCALE[ownerVariant];
+  ({
+    ownerVariant,
+    ownerColor,
+    ownerAlign,
+    ownerFontWeight,
+    ownerGutterBottom,
+    ownerNoWrap,
+  }): CSSObject => {
+    const { typography, font }: ThemeSchema = useTheme();
+
+    const typo = typography?.[ownerVariant] ?? FALLBACK_SCALE[ownerVariant];
     const fontFamily =
-      theme.typography?.fontFamily ??
-      theme.font?.fontFamily ??
-      "'Roboto', sans-serif";
-    const htmlFontSize =
-      theme.typography?.htmlFontSize ?? theme.font?.htmlFontSize ?? 14;
+      typography?.fontFamily ?? font?.fontFamily ?? "'Roboto', sans-serif";
+    const htmlFontSize = typography?.htmlFontSize ?? font?.htmlFontSize ?? 14;
 
     return {
       fontFamily,
