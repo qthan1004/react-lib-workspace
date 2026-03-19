@@ -33,7 +33,7 @@ git commit -m "<type>(<scope>): <subject>"
 
 5. Push to lib repo (system-core-ui/<lib-name>)
 ```bash
-git push origin main
+git push origin master
 ```
 
 6. Go back to workspace root and update submodule reference
