@@ -1,1 +1,0 @@
-export { resolveColor } from './resolveColor';

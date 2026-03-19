@@ -1,0 +1,12 @@
+[submodule "libs/theme"]
+	path = libs/theme
+	url = git@github.com:system-core-ui/theme.git
+[submodule "libs/utils"]
+	path = libs/utils
+	url = git@github.com:system-core-ui/utils.git
+[submodule "libs/dialog"]
+	path = libs/dialog
+	url = git@github.com:system-core-ui/dialog.git
+[submodule "libs/typography"]
+	path = libs/typography
+	url = git@github.com:system-core-ui/typography.git
