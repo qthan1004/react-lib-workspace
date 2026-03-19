@@ -1,3 +1,20 @@
 {
-  "singleQuote": true
+  "singleQuote": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^react$",
+    "^react-(.*)$",
+    "^react/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^@thanhdq/(.*)$",
+    "^\\.\\.?/(.*/)?(models|types)(/.*)?$",
+    "^\\.\\.?/(.*/)?(constants)(/.*)?$",
+    "^\\.\\.?/(.*/)?(helpers)(/.*)?$",
+    "^.+\\.(png|jpg|jpeg|gif|svg|webp|ico)$",
+    "^.+\\.(css|scss|less)$",
+    "^\\.\\.?/(.*/)?(styled)(/.*)?$",
+    "^\\.\\.?/"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
