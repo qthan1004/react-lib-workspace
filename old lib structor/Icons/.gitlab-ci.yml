@@ -1,0 +1,15 @@
+image: $IMG_BUILD_NX
+variables:
+  IMAGE: $CI_COMMIT_TAG
+  NAME_LIB: icon
+stages:
+  - build
+build_image:
+  stage: build
+  script:
+    - mkdir -p /usr/dgu/libs/$NAME_LIB
+    - cp -R . /usr/dgu/libs/$NAME_LIB
+    - cd /usr/dgu
+    - /bin/sh ./publish.sh $NAME_LIB $NPM_TOKEN
+  only:
+    - tags
