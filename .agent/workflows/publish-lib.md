@@ -38,21 +38,28 @@ git push origin release --follow-tags
 > If alpha fails or needs fixes: fix the code, commit, then repeat steps 3-4.
 > Each run increments: `v0.0.6-alpha.0` → `v0.0.6-alpha.1` → ...
 
+5. **STOP — Wait for user to confirm CI passed before proceeding**
+> Check CI status at `github.com/system-core-ui/<lib-name>` → Actions tab.
+> If CI failed: fix the issue, commit, and repeat from step 3.
+
 ## Phase 3 — Official build
 
-5. Run standard-version for official release (auto test + build)
+6. Run standard-version for official release (auto test + build)
 ```bash
 npx standard-version
 ```
 
-6. Push official release
+7. Push official release
 ```bash
 git push origin release --follow-tags
 ```
 
-## Phase 4 — Merge & cleanup
+8. **STOP — Wait for user to confirm CI passed before cleanup**
+> Check CI status. If CI failed: fix and repeat from step 6.
 
-7. Merge release into master and delete branch
+## Phase 4 — Merge & cleanup (only after user confirms CI passed)
+
+9. Merge release into master and delete branch
 ```bash
 git checkout master
 git merge release
@@ -63,7 +70,7 @@ git push origin --delete release
 
 ## Phase 5 — Update workspace submodule
 
-8. Update submodule reference in workspace
+10. Update submodule reference in workspace
 ```bash
 cd ../..
 git add libs/<lib-name>
@@ -74,6 +81,6 @@ git push
 ## Important Notes
 - `standard-version` auto-runs test (prerelease) + build (postbump) — if either fails, release is aborted
 - Alpha publishes to npm with `--tag alpha` (install via `@thanh-libs/<lib>@alpha`)
-- Official publishes to npm `latest` tag
+- Official publishes to npm `latest` tag, then auto-cleans up alpha versions
+- **NEVER delete the release branch until user confirms both alpha AND official CI passed**
 - The lib repo must have `NPM_TOKEN` secret configured
-- Check CI status at `github.com/system-core-ui/<lib-name>` → Actions tab
