@@ -29,9 +29,11 @@ description: Project structure and conventions to avoid redundant file reading
 - **Git**: Libs push to `system-core-ui/<lib>`, workspace tracks submodule refs at `qthan1004/react-lib-workspace`
 - **Branches**: All use `master` (not `main`)
 
-## Bulk Operations
+## Bulk Operations (tools/)
 - **Push all libs**: `bash tools/push-all-libs.sh "commit message"`
-- **Publish a lib**: Follow `/publish-lib` workflow (release branch → alpha → confirm CI → official → merge → cleanup)
+- **Run command on all libs**: `bash tools/apply-all-libs.sh '<command>'`
+- **Sync a file to all libs**: `bash tools/sync-config.sh <source> [dest]`
+- **Publish a lib**: Follow `/publish-lib` workflow
 
 ## Common Pitfalls (already fixed)
 - CI needs standalone tsconfig (no workspace-relative paths)
