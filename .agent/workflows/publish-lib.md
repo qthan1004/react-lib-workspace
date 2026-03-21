@@ -11,6 +11,14 @@ Uses a release branch with alpha builds for testing before the official publish.
 
 > `standard-version` will auto-run **test** (prerelease) and **build** (postbump) before creating the release.
 
+## Phase 0 — Review documentation
+
+0. **Check and update README.md** before publishing:
+   - Read the lib's source code (`src/index.ts`, components, models)
+   - Ensure README covers: installation, requirements/peer deps, API/props, usage examples
+   - If README is missing or outdated, write/update it and commit
+   - Commit doc changes to master BEFORE creating release branch
+
 ## Phase 1 — Setup release branch
 
 1. Navigate into the lib directory
