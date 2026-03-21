@@ -1,12 +1,9 @@
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
-
 import type { StorybookConfig } from '@storybook/react-vite';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const config: StorybookConfig = {
-  stories: [
-    '../libs/*/src/lib/**/*.@(mdx|stories.@(js|jsx|ts|tsx))',
-  ],
+  stories: ['../libs/*/src/lib/**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
   addons: [],
   framework: {
     name: getAbsolutePath('@storybook/react-vite'),
@@ -16,7 +13,7 @@ const config: StorybookConfig = {
     viteConfig.resolve = viteConfig.resolve ?? {};
     viteConfig.resolve.conditions = [
       ...(viteConfig.resolve.conditions ?? []),
-      '@thanhdq/source',
+      '@thanh-libs/source',
     ];
     viteConfig.esbuild = {
       ...viteConfig.esbuild,

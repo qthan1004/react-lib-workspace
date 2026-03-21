@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useTheme } from '@emotion/react';
-import type { ThemeSchema } from '@thanhdq/theme';
+import type { ThemeSchema } from '@thanh-libs/theme';
 import { Route, Routes, Link } from 'react-router-dom';
 
 // ─── Styled Components ───────────────────────────────────
@@ -132,7 +132,7 @@ function HomePage() {
           <span role="img" aria-label="palette">🎨</span> Theme Demo
         </CardTitle>
         <Text>
-          <strong>@thanhdq/theme</strong> — Emotion styled components sử dụng shared design tokens.
+          <strong>@thanh-libs/theme</strong> — Emotion styled components sử dụng shared design tokens.
         </Text>
       </Card>
 

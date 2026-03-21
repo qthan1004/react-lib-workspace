@@ -22,7 +22,7 @@ export default defineConfig(() => ({
     }),
   ],
   resolve: {
-    conditions: ['@thanhdq/source'],
+    conditions: ['@thanh-libs/source'],
   },
   // Uncomment this if you are using workers.
   // worker: {
@@ -37,7 +37,7 @@ export default defineConfig(() => ({
     },
   },
   test: {
-    name: '@thanhdq/demo',
+    name: '@thanh-libs/demo',
     watch: false,
     globals: true,
     environment: 'jsdom',
