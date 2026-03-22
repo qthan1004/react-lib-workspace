@@ -66,8 +66,8 @@ User: "tạo lib button"
 
 ## TODO
 
-- [ ] Tạo templates folder (`tools/templates/`)
-- [ ] Update `gen-lib.sh` dùng templates mới
-- [ ] Tạo workflow `/create-lib`
-- [ ] Tạo skill `component-patterns`
+- [x] Tạo templates folder (`tools/templates/`)
+- [x] Update `gen-lib.sh` dùng templates mới
+- [x] Tạo workflow `/create-lib`
+- [x] Tạo skill `component-patterns`
 - [ ] Tạo skill `testing-patterns`

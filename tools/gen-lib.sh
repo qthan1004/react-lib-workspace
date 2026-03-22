@@ -26,10 +26,17 @@ fi
 LIB_NAME="$1"
 IMPORT_PATH="@thanh-libs/${LIB_NAME}"
 LIB_DIR="libs/${LIB_NAME}"
+TEMPLATE_DIR="tools/templates"
 
 # ─── Check if library already exists ─────────────────────
 if [ -d "$LIB_DIR" ]; then
   echo "❌ Error: Library '${LIB_NAME}' already exists at ${LIB_DIR}"
+  exit 1
+fi
+
+# ─── Check templates exist ───────────────────────────────
+if [ ! -d "$TEMPLATE_DIR" ]; then
+  echo "❌ Error: Templates directory '${TEMPLATE_DIR}' not found"
   exit 1
 fi
 
@@ -39,8 +46,8 @@ echo "   Import path: ${IMPORT_PATH}"
 echo "   Directory: ${LIB_DIR}"
 echo ""
 
-# ─── Step 1: Generate React library ──────────────────────
-echo "📦 Step 1/3: Generating React library..."
+# ─── Step 1: Generate React library via nx ───────────────
+echo "📦 Step 1/6: Generating React library..."
 npx nx generate @nx/react:library "${LIB_NAME}" \
   --directory="${LIB_DIR}" \
   --bundler=vite \
@@ -54,14 +61,14 @@ npx nx generate @nx/react:library "${LIB_NAME}" \
 echo ""
 
 # ─── Step 2: Add Storybook configuration ─────────────────
-echo "📖 Step 2/3: Adding Storybook configuration..."
+echo "📖 Step 2/6: Adding Storybook configuration..."
 npx nx generate @nx/react:storybook-configuration "${IMPORT_PATH}" \
   --no-interactive
 
 echo ""
 
-# ─── Step 3: Update Storybook preview with ThemeProvider ──
-echo "🎨 Step 3/5: Configuring ThemeProvider for Storybook..."
+# ─── Step 3: Configure ThemeProvider for Storybook ────────
+echo "🎨 Step 3/6: Configuring ThemeProvider for Storybook..."
 cat > "${LIB_DIR}/.storybook/preview.ts" << 'EOF'
 import { Preview } from '@storybook/react-vite';
 import { ThemeProvider } from '@thanh-libs/theme';
@@ -105,7 +112,7 @@ EOF
 echo ""
 
 # ─── Step 4: Create .gitignore ────────────────────────────
-echo "🚫 Step 4/5: Creating .gitignore..."
+echo "🚫 Step 4/6: Creating .gitignore..."
 cat > "${LIB_DIR}/.gitignore" << 'EOF'
 # Build output
 dist
@@ -126,102 +133,50 @@ vite.config.*.timestamp*
 vitest.config.*.timestamp*
 EOF
 
-# ─── Step 5: Create GitHub Actions publish workflow ───────
-echo "🚀 Step 5/5: Creating CI/CD publish workflow..."
-mkdir -p "${LIB_DIR}/.github/workflows"
-cat > "${LIB_DIR}/.github/workflows/publish.yml" << 'WORKFLOW_EOF'
-name: Publish to npm
-
-on:
-  push:
-    tags:
-      - 'v*'
-
-jobs:
-  # ─── Stage 1: Test ───
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.13.0'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npx vitest run
-
-  # ─── Stage 2: Build ───
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.13.0'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npx vite build
-
-  # ─── Stage 3: Publish ───
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.13.0'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npx vite build
-
-      - name: Publish to npm
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-WORKFLOW_EOF
-
-# ─── Update package.json: add publishConfig + release scripts ───
 echo ""
-echo "📝 Updating package.json with publishConfig and release scripts..."
 
-# Use node to safely modify package.json
-node -e "
-const fs = require('fs');
-const pkgPath = '${LIB_DIR}/package.json';
-const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
-pkg.publishConfig = { access: 'public' };
-pkg.scripts = pkg.scripts || {};
-pkg.scripts.release = 'standard-version';
-pkg.scripts['release:minor'] = 'standard-version --release-as minor';
-pkg.scripts['release:major'] = 'standard-version --release-as major';
-if (pkg.files) {
-  if (!pkg.files.includes('!**/*.stories.*')) {
-    pkg.files.push('!**/*.stories.*');
-  }
-}
-fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
-"
+# ─── Step 5: Apply templates ─────────────────────────────
+echo "📋 Step 5/6: Applying CI-ready templates..."
+
+# Copy static templates (no placeholders)
+cp "${TEMPLATE_DIR}/tsconfig.json"           "${LIB_DIR}/tsconfig.json"
+cp "${TEMPLATE_DIR}/tsconfig.lib.json"       "${LIB_DIR}/tsconfig.lib.json"
+cp "${TEMPLATE_DIR}/tsconfig.spec.json"      "${LIB_DIR}/tsconfig.spec.json"
+cp "${TEMPLATE_DIR}/tsconfig.storybook.json" "${LIB_DIR}/tsconfig.storybook.json"
+
+# Copy publish workflow
+mkdir -p "${LIB_DIR}/.github/workflows"
+cp "${TEMPLATE_DIR}/publish.yml" "${LIB_DIR}/.github/workflows/publish.yml"
+
+# Copy templates with {{LIB_NAME}} placeholder and replace
+cp "${TEMPLATE_DIR}/package.json" "${LIB_DIR}/package.json"
+sed -i "s/{{LIB_NAME}}/${LIB_NAME}/g" "${LIB_DIR}/package.json"
+
+cp "${TEMPLATE_DIR}/vite.config.mts" "${LIB_DIR}/vite.config.mts"
+sed -i "s/{{LIB_NAME}}/${LIB_NAME}/g" "${LIB_DIR}/vite.config.mts"
+
+echo "   ✔ tsconfig.json, tsconfig.lib.json, tsconfig.spec.json, tsconfig.storybook.json"
+echo "   ✔ publish.yml"
+echo "   ✔ package.json (with @thanh-libs/${LIB_NAME})"
+echo "   ✔ vite.config.mts (with @thanh-libs/${LIB_NAME})"
+
+echo ""
+
+# ─── Step 6: Verify ──────────────────────────────────────
+echo "✅ Step 6/6: Verifying..."
+
+# Quick sanity check: ensure key files exist
+MISSING=0
+for f in tsconfig.json tsconfig.lib.json tsconfig.spec.json tsconfig.storybook.json vite.config.mts package.json .gitignore .github/workflows/publish.yml .storybook/preview.ts; do
+  if [ ! -f "${LIB_DIR}/${f}" ]; then
+    echo "   ❌ Missing: ${f}"
+    MISSING=1
+  fi
+done
+
+if [ $MISSING -eq 0 ]; then
+  echo "   ✔ All files present"
+fi
 
 echo ""
 echo "✅ Library '${LIB_NAME}' created successfully!"
@@ -238,4 +193,8 @@ echo "   git push origin master --follow-tags   # Push & trigger publish"
 echo ""
 echo "📝 Import in your code:"
 echo "   import { ${LIB_NAME^} } from '${IMPORT_PATH}';"
+echo ""
+echo "⚠️  Next steps:"
+echo "   1. Setup git repo: follow /create-lib workflow (Phase 2+)"
+echo "   2. Configure NPM_TOKEN secret at github.com/system-core-ui/${LIB_NAME}"
 echo ""
