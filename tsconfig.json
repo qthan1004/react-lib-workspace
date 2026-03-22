@@ -20,6 +20,9 @@
     },
     {
       "path": "./libs/layout"
+    },
+    {
+      "path": "./libs/button"
     }
   ],
   "ts-node": {

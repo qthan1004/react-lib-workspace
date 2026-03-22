@@ -187,3 +187,22 @@ When a component accepts numeric `spacing` props, map to theme scale:
 | 3 | `spacing.medium` | 12px |
 | 4 | `spacing.large` | 16px |
 | 5 | `spacing.extraLarge` | 24px |
+
+## Reference Libraries
+
+When designing a new component or deciding on its API, **always research these libraries first** to inform your decisions:
+
+| Library | What to look for |
+|---------|-----------------|
+| **MUI** (Material UI) | Props API, variants, sizes, accessibility patterns |
+| **Ant Design** | Props API, feature set, nested/composition patterns |
+| **shadcn/ui** | Compound component patterns, modern API design, simplicity |
+
+**Process:**
+1. Check how each library implements the component
+2. Identify common props across all three (these are likely essential)
+3. Note unique/useful props from each (consider adopting the best ones)
+4. Design our API by combining the best patterns — keep it simple but powerful
+5. Document the reasoning in the implementation plan
+
+> Our lib should feel familiar to devs who've used MUI/Ant/shadcn, but remain lightweight and opinionated where it matters.

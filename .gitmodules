@@ -13,3 +13,6 @@
 [submodule "libs/layout"]
 	path = libs/layout
 	url = git@github.com:system-core-ui/layout.git
+[submodule "libs/button"]
+	path = libs/button
+	url = git@github.com:system-core-ui/button.git
