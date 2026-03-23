@@ -19,6 +19,12 @@ Uses a release branch with alpha builds for testing before the official publish.
    - If README is missing or outdated, write/update it and commit
    - Commit doc changes to master BEFORE creating release branch
 
+1. **Run dependency check** to ensure all imports are declared in package.json:
+```bash
+bash tools/check-lib-deps.sh <lib-name>
+```
+> If any missing deps are reported, add them to `devDependencies` and commit to master first.
+
 ## Phase 1 — Setup release branch
 
 1. Navigate into the lib directory
