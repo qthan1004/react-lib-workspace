@@ -162,12 +162,16 @@ cp LICENSE "${LIB_DIR}/LICENSE"
 mkdir -p "${LIB_DIR}/tests"
 cp "${TEMPLATE_DIR}/tests/setup.ts" "${LIB_DIR}/tests/setup.ts"
 
+# Copy dependency checker
+cp "${TEMPLATE_DIR}/check-deps.mjs" "${LIB_DIR}/check-deps.mjs"
+
 echo "   ✔ tsconfig.json, tsconfig.lib.json, tsconfig.spec.json, tsconfig.storybook.json"
 echo "   ✔ publish.yml"
 echo "   ✔ package.json (with @thanh-libs/${LIB_NAME})"
 echo "   ✔ vite.config.mts (with @thanh-libs/${LIB_NAME})"
 echo "   ✔ LICENSE"
 echo "   ✔ tests/setup.ts"
+echo "   ✔ check-deps.mjs"
 
 echo ""
 
