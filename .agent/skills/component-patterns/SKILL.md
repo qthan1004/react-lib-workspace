@@ -206,3 +206,34 @@ When designing a new component or deciding on its API, **always research these l
 5. Document the reasoning in the implementation plan
 
 > Our lib should feel familiar to devs who've used MUI/Ant/shadcn, but remain lightweight and opinionated where it matters.
+
+## WCAG 2.2 Accessibility Checklist
+
+Every component MUST comply with WCAG 2.2. Apply relevant items from this checklist:
+
+### Required for ALL components
+- **SC 4.1.2 (Name, Role, Value)**: Use semantic HTML (`<button>`, `<dialog>`, etc.) — not `<div onClick>`
+- **SC 2.4.7 (Focus Visible)**: `:focus-visible` style on all interactive elements
+- **SC 2.4.13 (Focus Appearance)**: `outline: 2px solid transparent` alongside `box-shadow` for Windows High Contrast Mode
+- **SC 4.1.2**: `forwardRef` + `displayName` on all components
+- **SC 4.1.2**: Spread `...rest` to allow `aria-*` props passthrough
+
+### Interactive components (buttons, inputs, links)
+- **SC 4.1.2**: `aria-disabled` when disabled (some AT ignores `disabled` attr)
+- **SC 4.1.2**: `aria-busy={true}` during loading states
+- **SC 1.1.1 (Non-text Content)**: `aria-hidden="true"` on decorative icons
+- **SC 1.1.1**: Icon-only buttons MUST document `aria-label` requirement in JSDoc
+- **SC 4.1.3 (Status Messages)**: Loading spinners need `role="status"` + `aria-label`
+
+### Overlay components (modal, drawer, popover, tooltip)
+- **SC 2.4.3 (Focus Order)**: Focus trap inside modal/drawer when open
+- **SC 4.1.2**: `role="dialog"` + `aria-modal="true"` on modal/drawer
+- **SC 3.2.1 (On Focus)**: Restore focus to trigger element on close
+- **SC 1.4.13 (Content on Hover)**: Tooltips must be dismissable (ESC) and hoverable
+- **SC 2.1.1 (Keyboard)**: ESC key to close overlays
+
+### Form components (inputs, selects, checkboxes)
+- **SC 1.3.1 (Info and Relationships)**: Associate labels via `htmlFor`/`id` or `aria-labelledby`
+- **SC 3.3.1 (Error Identification)**: `aria-invalid` + `aria-errormessage` for validation errors
+- **SC 3.3.2 (Labels or Instructions)**: `aria-describedby` for helper text
+- **SC 4.1.2**: `aria-required` for required fields

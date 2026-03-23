@@ -28,6 +28,7 @@ description: Project structure and conventions to avoid redundant file reading
 - **standard-version**: `prerelease` hook runs `vitest --passWithNoTests`, `postbump` runs build
 - **Git**: Libs push to `system-core-ui/<lib>`, workspace tracks submodule refs at `qthan1004/react-lib-workspace`
 - **Branches**: All use `master` (not `main`)
+- **Accessibility**: All components MUST comply with WCAG 2.2 — see checklist in `component-patterns` skill
 
 ## Bulk Operations (tools/)
 - **Push all libs**: `bash tools/push-all-libs.sh "commit message"`

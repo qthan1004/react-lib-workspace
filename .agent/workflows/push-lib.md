@@ -46,6 +46,6 @@ git push
 
 ## Important Notes
 - **NEVER** commit lib source code to the workspace repo directly
-- Libs live at `git@github.com:system-core-ui/<lib-name>.git`
+- Libs live at `github.com/system-core-ui/<lib-name>` (SSH or HTTPS — check `.gitmodules` for current protocol)
 - The workspace only tracks the submodule commit reference
 - After pushing lib changes, always update the submodule reference in workspace
