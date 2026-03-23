@@ -16,3 +16,6 @@
 [submodule "libs/button"]
 	path = libs/button
 	url = git@github.com:system-core-ui/button.git
+[submodule "libs/chip"]
+	path = libs/chip
+	url = git@github.com:system-core-ui/chip.git
