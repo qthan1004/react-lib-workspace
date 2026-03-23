@@ -40,3 +40,8 @@ description: Project structure and conventions to avoid redundant file reading
 - CI needs `--passWithNoTests` for libs without test files
 - CI needs all build deps in each lib's `package.json` (not just workspace root)
 - `vite.config.mts` `resolve.conditions` uses `@thanh-libs/source` for dev
+
+## Time Limits
+- **Commands**: If a terminal command runs >30s with no new output, stop it and report the issue to the user — do NOT silently retry or wait indefinitely
+- **Steps**: If any step (research, build, git, etc.) takes >1 minute without making progress, pause and report status to the user
+- **Git operations**: If `git commit`/`push`/`pull` hangs, check for lock files, zombie processes, or GPG issues before retrying — report to the user if not resolved in 2 attempts
