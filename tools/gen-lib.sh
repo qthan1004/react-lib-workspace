@@ -155,10 +155,14 @@ sed -i "s/{{LIB_NAME}}/${LIB_NAME}/g" "${LIB_DIR}/package.json"
 cp "${TEMPLATE_DIR}/vite.config.mts" "${LIB_DIR}/vite.config.mts"
 sed -i "s/{{LIB_NAME}}/${LIB_NAME}/g" "${LIB_DIR}/vite.config.mts"
 
+# Copy LICENSE from root
+cp LICENSE "${LIB_DIR}/LICENSE"
+
 echo "   ✔ tsconfig.json, tsconfig.lib.json, tsconfig.spec.json, tsconfig.storybook.json"
 echo "   ✔ publish.yml"
 echo "   ✔ package.json (with @thanh-libs/${LIB_NAME})"
 echo "   ✔ vite.config.mts (with @thanh-libs/${LIB_NAME})"
+echo "   ✔ LICENSE"
 
 echo ""
 
@@ -167,7 +171,7 @@ echo "✅ Step 6/6: Verifying..."
 
 # Quick sanity check: ensure key files exist
 MISSING=0
-for f in tsconfig.json tsconfig.lib.json tsconfig.spec.json tsconfig.storybook.json vite.config.mts package.json .gitignore .github/workflows/publish.yml .storybook/preview.ts; do
+for f in tsconfig.json tsconfig.lib.json tsconfig.spec.json tsconfig.storybook.json vite.config.mts package.json LICENSE .gitignore .github/workflows/publish.yml .storybook/preview.ts; do
   if [ ! -f "${LIB_DIR}/${f}" ]; then
     echo "   ❌ Missing: ${f}"
     MISSING=1

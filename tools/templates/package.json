@@ -1,6 +1,7 @@
 {
   "name": "@thanh-libs/{{LIB_NAME}}",
   "version": "0.0.1",
+  "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -24,6 +25,7 @@
   },
   "files": [
     "dist",
+    "LICENSE",
     "!**/*.tsbuildinfo",
     "!**/*.stories.*"
   ],

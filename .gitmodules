@@ -1,18 +1,18 @@
 [submodule "libs/theme"]
 	path = libs/theme
-	url = git@github.com:system-core-ui/theme.git
+	url = https://github.com/system-core-ui/theme.git
 [submodule "libs/utils"]
 	path = libs/utils
-	url = git@github.com:system-core-ui/utils.git
+	url = https://github.com/system-core-ui/utils.git
 [submodule "libs/dialog"]
 	path = libs/dialog
-	url = git@github.com:system-core-ui/dialog.git
+	url = https://github.com/system-core-ui/dialog.git
 [submodule "libs/typography"]
 	path = libs/typography
-	url = git@github.com:system-core-ui/typography.git
+	url = https://github.com/system-core-ui/typography.git
 [submodule "libs/layout"]
 	path = libs/layout
-	url = git@github.com:system-core-ui/layout.git
+	url = https://github.com/system-core-ui/layout.git
 [submodule "libs/button"]
 	path = libs/button
-	url = git@github.com:system-core-ui/button.git
+	url = https://github.com/system-core-ui/button.git

@@ -5,12 +5,12 @@
 
 set -e
 WORKSPACE_ROOT=$(cd "$(dirname "$0")/.." && pwd)
-LIBS=("utils" "theme" "dialog" "typography")
 MSG="$1"
 
-for lib in "${LIBS[@]}"; do
+for dir in "$WORKSPACE_ROOT"/libs/*/; do
+  lib=$(basename "$dir")
   echo "──── $lib ────"
-  cd "$WORKSPACE_ROOT/libs/$lib"
+  cd "$dir"
 
   if [ -n "$MSG" ]; then
     git add .
