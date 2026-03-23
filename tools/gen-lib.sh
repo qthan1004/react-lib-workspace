@@ -158,11 +158,16 @@ sed -i "s/{{LIB_NAME}}/${LIB_NAME}/g" "${LIB_DIR}/vite.config.mts"
 # Copy LICENSE from root
 cp LICENSE "${LIB_DIR}/LICENSE"
 
+# Copy test setup
+mkdir -p "${LIB_DIR}/tests"
+cp "${TEMPLATE_DIR}/tests/setup.ts" "${LIB_DIR}/tests/setup.ts"
+
 echo "   ✔ tsconfig.json, tsconfig.lib.json, tsconfig.spec.json, tsconfig.storybook.json"
 echo "   ✔ publish.yml"
 echo "   ✔ package.json (with @thanh-libs/${LIB_NAME})"
 echo "   ✔ vite.config.mts (with @thanh-libs/${LIB_NAME})"
 echo "   ✔ LICENSE"
+echo "   ✔ tests/setup.ts"
 
 echo ""
 
