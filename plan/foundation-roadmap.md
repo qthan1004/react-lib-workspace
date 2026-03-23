@@ -21,6 +21,11 @@ graph TB
         Accordion["@thanh-libs/accordion"]
         Switch["@thanh-libs/switch"]
         Slider["@thanh-libs/slider"]
+        Avatar["@thanh-libs/avatar"]
+        Badge["@thanh-libs/badge"]
+        Menu["@thanh-libs/menu"]
+        Breadcrumb["@thanh-libs/breadcrumb"]
+        Toast["@thanh-libs/toast"]
     end
 
     subgraph "Tier 1 — Core ✅"
@@ -57,6 +62,13 @@ graph TB
     Accordion --> Theme
     Switch --> Theme
     Slider --> Theme
+    Avatar --> Theme
+    Badge --> Theme
+    Menu --> Theme
+    Menu --> Dialog
+    Breadcrumb --> Theme
+    Toast --> Theme
+    Toast --> Dialog
 ```
 
 ---
@@ -74,7 +86,7 @@ graph TB
 
 ---
 
-## Tier 2 — Foundation (9 libs)
+## Tier 2 — Foundation (14 libs)
 
 ### 1. `@thanh-libs/input`
 
@@ -215,6 +227,67 @@ Range / value slider.
 
 ---
 
+### 10. `@thanh-libs/avatar`
+
+| Component | Props chính |
+|-----------|-----|
+| **Avatar** | `src`, `alt`, `size`, `variant` (circular/rounded/square), `fallback` (icon/text), `color` |
+| **AvatarGroup** | `max`, `total`, `spacing`, `size` |
+
+**Phụ thuộc:** `theme`
+
+---
+
+### 11. `@thanh-libs/badge`
+
+| Component | Props chính |
+|-----------|-----|
+| **Badge** | `count`, `dot`, `color`, `max`, `showZero`, `overflowCount`, `offset`, `placement` |
+
+**Phụ thuộc:** `theme`
+
+---
+
+### 12. `@thanh-libs/menu`
+
+Dropdown menu — dùng **Popover** từ `dialog`.
+
+| Component | Props chính |
+|-----------|-----|
+| **Menu** | `open`, `onClose`, `anchorEl`, `placement` |
+| **MenuItem** | `onClick`, `disabled`, `icon`, `shortcut`, `danger` |
+| **MenuDivider** | — |
+| **SubMenu** | `label`, `children` (nested menu) |
+
+**Phụ thuộc:** `theme`, `dialog` (Popover)
+
+---
+
+### 13. `@thanh-libs/breadcrumb`
+
+| Component | Props chính |
+|-----------|-----|
+| **Breadcrumb** | `separator`, `maxItems`, `itemsBeforeCollapse`, `itemsAfterCollapse` |
+| **BreadcrumbItem** | `href`, `onClick`, `icon`, `active` |
+
+**Phụ thuộc:** `theme`
+
+---
+
+### 14. `@thanh-libs/toast`
+
+Snackbar / Toast notification system.
+
+| Component | Props chính |
+|-----------|-----|
+| **ToastProvider** | `placement`, `maxToasts`, `duration` |
+| **Toast** | `message`, `description`, `type` (success/error/warning/info), `duration`, `closable`, `action` |
+| **useToast()** | Hook: `toast.success()`, `toast.error()`, `toast.warning()`, `toast.info()` |
+
+**Phụ thuộc:** `theme`, `dialog` (Portal/overlay)
+
+---
+
 ## Tier 3 — Complex (tương lai)
 
 | Component | Cần Foundation nào | Mô tả |
@@ -230,12 +303,19 @@ Range / value slider.
 
 | # | Lib | Lý do |
 |---|-----|-------|
-| 1 | **chip** | Không phụ thuộc Foundation nào, cần cho select/autocomplete |
-| 2 | **switch** | Độc lập, đơn giản |
-| 3 | **slider** | Độc lập |
-| 4 | **card** | Độc lập, dùng được ngay |
-| 5 | **accordion** | Độc lập |
-| 6 | **tabs** | Độc lập |
-| 7 | **input** | Cần cho select/autocomplete |
-| 8 | **select** | Phụ thuộc input + chip + dialog |
-| 9 | **autocomplete** | Phụ thuộc input + chip + dialog, phức tạp nhất |
+| 🔥 | **theme (refactor palette + shadows)** | Fix semantic colors + shadows. **Ưu tiên cao nhất** |
+| 1 | **avatar** | Cần cho header, card, menu, profile |
+| 2 | **menu** (multi-level) | Sidebar nav, dropdown, phụ thuộc dialog (Popover) |
+| 3 | **breadcrumb** | Navigation cơ bản, header |
+| ✅ | **chip** | Đã scaffold, cần publish |
+| 4 | **switch** | Độc lập, đơn giản |
+| 5 | **badge** | Độc lập, dùng với avatar/menu |
+| 6 | **slider** | Độc lập |
+| 7 | **card** | Độc lập, dùng được ngay |
+| 8 | **accordion** | Độc lập |
+| 9 | **tabs** | Độc lập |
+| 10 | **toast / snackbar** | Feedback system, phụ thuộc dialog |
+| 11 | **input** | Cần cho select/autocomplete |
+| 12 | **select** | Phụ thuộc input + chip + dialog |
+| 13 | **autocomplete** | Phụ thuộc input + chip + dialog, phức tạp nhất |
+
