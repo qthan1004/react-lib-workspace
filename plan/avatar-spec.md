@@ -8,7 +8,7 @@ Dựa trên requirements thực tế, `@thanh-libs/avatar` được thiết kế
 |------|------|---------|-------|
 | `src` | `string` | `undefined` | URL hình ảnh. |
 | `alt` | `string` | `name \|\| 'avatar'` | Alternative text cho `<img>`, screen reader đọc được. |
-| `name` | `string` | `undefined` | Họ tên đầy đủ. Cắt 2 chữ cái đầu (VD: "Quốc Thành" → "QT"). |
+| `name` | `string` | `undefined` | Họ tên đầy đủ. Cắt 2 chữ cái đầu (VD: "Quốc Thanh" → "QT"). |
 | `color` | `string` | `undefined` | Màu nền manual cho initials/icon (hex, rgb, hsl). |
 | `autoColor` | `boolean` | `false` | Khi `true`, dùng `textToColor(name)` để tự sinh màu nền từ tên. Bị ignore nếu đã truyền `color`. |
 | `fallbackIcon` | `ReactNode` | `<DefaultUserIcon />` | Icon mặc định khi không có `src` và `name`. |
@@ -26,7 +26,7 @@ Dựa trên requirements thực tế, `@thanh-libs/avatar` được thiết kế
 
 ### Dạng 2: Initials (từ tên)
 - Có `name`, không có `src` (hoặc `src` lỗi).
-- Cắt 2 chữ cái đầu: "Quốc Thành" → "QT".
+- Cắt 2 chữ cái đầu: "Quốc Thanh" → "QT".
 - **Màu nền logic:**
   1. Nếu truyền `color` → dùng luôn.
   2. Nếu `autoColor={true}` (và không có `color`) → gọi `textToColor(name)` tự sinh màu.
