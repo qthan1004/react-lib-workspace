@@ -84,11 +84,18 @@ git push origin --delete release
 
 ## Phase 5 — Update workspace submodule
 
-10. Update submodule reference in workspace
+10. Update submodule reference and release log in workspace
 ```bash
 cd ../..
 git add libs/<lib-name>
-git commit -m "chore: update <lib-name> submodule"
+```
+
+11. **Update `RELEASES.md`** — Add a new row to the table with the lib name, new version, and today's date. Only log official releases (not alpha).
+
+12. Commit and push workspace
+```bash
+git add RELEASES.md
+git commit -m "chore: update <lib-name> submodule to v<version>"
 git push
 ```
 
