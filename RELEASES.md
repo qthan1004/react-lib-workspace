@@ -6,8 +6,9 @@ Official releases of all libs under `@thanh-libs/*`.
 
 | # | Library | Version | Date |
 |---|---------|---------|------|
-| 1 | @thanh-libs/utils | **0.0.7** | **2026-03-24** |
-| 2 | @thanh-libs/utils | 0.0.6 | 2026-03-23 |
+| 1 | @thanh-libs/utils | **0.0.8** | **2026-03-24** |
+| 2 | @thanh-libs/utils | 0.0.7 | 2026-03-24 |
+| 3 | @thanh-libs/utils | 0.0.6 | 2026-03-23 |
 | 3 | @thanh-libs/utils | 0.0.5 | 2026-03-21 |
 | 4 | @thanh-libs/utils | 0.0.4 | 2026-03-21 |
 | 5 | @thanh-libs/utils | 0.0.3 | 2026-03-21 |
@@ -24,5 +25,5 @@ Official releases of all libs under `@thanh-libs/*`.
 | 16 | @thanh-libs/button | 0.0.3 | 2026-03-23 |
 | 17 | @thanh-libs/button | 0.0.2 | 2026-03-23 |
 | 18 | @thanh-libs/dialog | **0.0.2** | **2026-03-23** |
-| — | @thanh-libs/chip | -- | -- |
+| 19 | @thanh-libs/chip | **0.0.2** | **2026-03-24** |
 | — | @thanh-libs/avatar | -- | -- |
