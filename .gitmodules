@@ -22,3 +22,6 @@
 [submodule "libs/avatar"]
 	path = libs/avatar
 	url = git@github.com:system-core-ui/avatar.git
+[submodule "libs/menu"]
+	path = libs/menu
+	url = https://github.com/system-core-ui/menu.git
