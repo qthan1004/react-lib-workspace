@@ -27,11 +27,25 @@ bash tools/check-lib-deps.sh <lib-name>
 
 ## Phase 1 — Setup release branch
 
-2. Setup release branch, create alpha build, and push
+1. Navigate into the lib directory
 ```bash
 cd libs/<lib-name>
+```
+
+2. Create a release branch
+```bash
 git checkout -b release
+```
+
+## Phase 2 — Alpha build
+
+3. Run standard-version with alpha prerelease (auto test + build)
+```bash
 npx standard-version --prerelease alpha
+```
+
+4. Push alpha to trigger CI/CD
+```bash
 git push origin release --follow-tags
 ```
 
@@ -44,9 +58,13 @@ git push origin release --follow-tags
 
 ## Phase 3 — Official build
 
-6. Create official release and push
+6. Run standard-version for official release (auto test + build)
 ```bash
 npx standard-version
+```
+
+7. Push official release
+```bash
 git push origin release --follow-tags
 ```
 
@@ -55,19 +73,27 @@ git push origin release --follow-tags
 
 ## Phase 4 — Merge & cleanup (only after user confirms CI passed)
 
-9. Merge release into master, clean up branch, update workspace submodule in one go.
-**(Ensure you have updated RELEASES.md before running this)**
+9. Merge release into master and delete branch
 ```bash
-# Merge and cleanup release branch
 git checkout master
 git merge release
 git push origin master
 git branch -d release
 git push origin --delete release
+```
 
-# Update workspace submodule & commit
+## Phase 5 — Update workspace submodule
+
+10. Update submodule reference and release log in workspace
+```bash
 cd ../..
 git add libs/<lib-name>
+```
+
+11. **Update `RELEASES.md`** — Add a new row to the table with the lib name, new version, and today's date. Only log official releases (not alpha).
+
+12. Commit and push workspace
+```bash
 git add RELEASES.md
 git commit -m "chore: update <lib-name> submodule to v<version>"
 git push

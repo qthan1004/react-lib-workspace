@@ -26,29 +26,34 @@ bash tools/gen-lib.sh <lib-name>
 
 ## Phase 2 — Create GitHub repo + Setup Git
 
-2. Create the GitHub repo via `gh` CLI, initialize, and set up the submodule in one go.
+2. Create the GitHub repo via `gh` CLI
 ```bash
-# Define your variables first
-LIB_NAME="<lib-name>"
-PROTOCOL_URL="<url-matching-.gitmodules-protocol>" # e.g. git@github.com:system-core-ui/<lib-name>.git
+gh repo create system-core-ui/<lib-name> --public --confirm
+```
 
-# Create github repo
-gh repo create system-core-ui/$LIB_NAME --public --confirm
-
-# Init lib repo and push
-cd libs/$LIB_NAME
+3. Initialize as git repo and push to GitHub (use the same protocol as existing submodules)
+```bash
+cd libs/<lib-name>
 git init
-git remote add origin $PROTOCOL_URL
+# SSH:   git remote add origin git@github.com:system-core-ui/<lib-name>.git
+# HTTPS: git remote add origin https://github.com/system-core-ui/<lib-name>.git
+git remote add origin <url-matching-.gitmodules-protocol>
 git checkout -b master
 git add .
-git commit -m "feat: initial scaffold for @thanh-libs/$LIB_NAME"
+git commit -m "feat: initial scaffold for @thanh-libs/<lib-name>"
 git push -u origin master
+```
 
-# Register as workspace submodule
+## Phase 3 — Register as workspace submodule
+
+4. Go back to workspace root and add as submodule (use same protocol as `.gitmodules`)
+```bash
 cd ../..
-git submodule add $PROTOCOL_URL libs/$LIB_NAME
+# SSH:   git submodule add git@github.com:system-core-ui/<lib-name>.git libs/<lib-name>
+# HTTPS: git submodule add https://github.com/system-core-ui/<lib-name>.git libs/<lib-name>
+git submodule add <url-matching-.gitmodules-protocol> libs/<lib-name>
 git add .
-git commit -m "chore: add $LIB_NAME submodule"
+git commit -m "chore: add <lib-name> submodule"
 git push
 ```
 

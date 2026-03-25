@@ -6,11 +6,23 @@ description: Git commit and push workflow with auto-approve for all commands
 
 # Git Commit & Push
 
-1. Stage, commit, and push in one go
+1. Check status
 ```bash
-# Optional: git status --short
+git status --short
+```
+
+2. Stage files
+```bash
 git add <files>
+```
+
+3. Commit with Conventional Commits format
+```bash
 git commit -m "<type>(<scope>): <subject>"
+```
+
+4. Push to remote
+```bash
 git push
 ```
 
