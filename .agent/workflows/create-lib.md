@@ -6,6 +6,9 @@ description: Create a new lib from scratch — scaffold, configure git, push
 
 # Create a New Library
 
+## Prerequisites
+- Check git protocol: `grep url .gitmodules | head -1` (SSH: `git@github.com:...` / HTTPS: `https://github.com/...`)
+
 ## 1. Scaffold
 ```bash
 bash tools/gen-lib.sh <lib-name>
@@ -14,6 +17,7 @@ bash tools/gen-lib.sh <lib-name>
 ## 2. GitHub & Git Setup
 ```bash
 LIB_NAME="<lib-name>"
+# Use same protocol as .gitmodules (SSH or HTTPS)
 PROTOCOL_URL="<url-matching-.gitmodules-protocol>" # e.g. git@github.com:system-core-ui/<lib>.git
 
 gh repo create system-core-ui/$LIB_NAME --public --confirm
@@ -41,3 +45,8 @@ cd libs/<lib-name>
 npm install
 npx vite build
 ```
+
+## Notes
+- `gen-lib.sh` handles: nx scaffold + storybook + templates copy + verification.
+- Templates live in `tools/templates/` — update there to change defaults for all future libs.
+- After this workflow, the lib is immediately ready for `/publish-lib`.

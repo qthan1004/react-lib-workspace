@@ -33,9 +33,19 @@ git merge release
 git push origin master
 git branch -d release
 git push origin --delete release
+```
 
+## 4. Update Workspace
+- Update `RELEASES.md` — add row with lib name, version, date (official only, not alpha).
+```bash
 cd ../..
 git add libs/<lib-name> RELEASES.md
-git commit -m "chore: update <lib-name> v<version>"
+git commit -m "chore: update <lib-name> submodule to v<version>"
 git push
 ```
+
+## Notes
+- `standard-version` auto-runs test (prerelease) + build (postbump) — if either fails, release is aborted.
+- Alpha publishes with `--tag alpha`, official publishes to `latest` and auto-cleans alpha versions.
+- **NEVER** delete release branch until user confirms both alpha AND official CI passed.
+- Lib repo must have `NPM_TOKEN` secret configured.

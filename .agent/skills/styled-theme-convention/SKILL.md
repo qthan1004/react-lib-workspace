@@ -10,7 +10,7 @@ description: Convention for accessing theme inside @emotion/styled components us
 ```tsx
 import styled from '@emotion/styled';
 import { CSSObject, useTheme } from '@emotion/react';
-import { ThemeSchema } from '@thanhdq/theme';
+import { ThemeSchema } from '@thanh-libs/theme';
 
 export const MyComponentStyled = styled.div<{ ownerOpen: boolean }>(({ ownerOpen }): CSSObject => {
   const { palette, spacing }: ThemeSchema = useTheme();

@@ -8,8 +8,7 @@
     "test": "npx nx run-many --target=test --all",
     "storybook": "storybook dev -p 6006",
     "gen-lib": "bash tools/gen-lib.sh",
-    "lint": "npx nx run-many --target=lint --all",
-    "postinstall": "sed -i 's/await Promise.resolve().then(() => require(.vitest\\/node.))/await import(.vitest\\/node.)/g' node_modules/@nx/vitest/src/plugins/plugin.js || true"
+    "lint": "npx nx run-many --target=lint --all"
   },
   "private": true,
   "dependencies": {
