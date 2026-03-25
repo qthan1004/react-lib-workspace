@@ -4,40 +4,40 @@ description: Create a new lib from scratch — scaffold, configure git, push
 
 // turbo-all
 
-# Create a New Library
 
-## Prerequisites
-- Check git protocol: `grep url .gitmodules | head -1` (SSH: `git@github.com:...` / HTTPS: `https://github.com/...`)
+# Create a New Library
 
 ## 1. Scaffold
 ```bash
 bash tools/gen-lib.sh <lib-name>
 ```
 
-## 2. GitHub & Git Setup
+## 2. Analysis & Planning (MUST complete before implementation)
+
+> **Do NOT implement any component code yet.** This gate prevents wasted quota.
+
+After scaffold is verified, perform the following:
+
+1. **Analyze the scaffolded lib** — review what was generated, identify what the component needs (props, variants, states, sub-components).
+2. **Research reference libraries** — study how MUI, Ant Design, and shadcn/ui implement the same component. Focus on:
+   - API design (props, slots, composition patterns)
+   - Variants & states
+   - Accessibility approach
+   - Any notable patterns worth adopting or avoiding
+3. **Write an analysis doc** (`implementation_plan.md`) covering:
+   - Component purpose & scope
+   - Proposed API (props table with types & defaults)
+   - Reference comparison (what to adopt from each library)
+   - Open questions / trade-offs for user to decide
+4. **Send to user for review** via `notify_user` with `BlockedOnUser: true`.
+5. **Wait for user confirmation** — only proceed to implementation after approval.
+
+## 3. GitHub & Git Setup
 ```bash
-LIB_NAME="<lib-name>"
-# Use same protocol as .gitmodules (SSH or HTTPS)
-PROTOCOL_URL="<url-matching-.gitmodules-protocol>" # e.g. git@github.com:system-core-ui/<lib>.git
-
-gh repo create system-core-ui/$LIB_NAME --public --confirm
-
-cd libs/$LIB_NAME
-git init
-git remote add origin $PROTOCOL_URL
-git checkout -b master
-git add .
-git commit -m "feat: initial scaffold for @thanh-libs/$LIB_NAME"
-git push -u origin master
-
-cd ../..
-git submodule add $PROTOCOL_URL libs/$LIB_NAME
-git add .
-git commit -m "chore: add $LIB_NAME submodule"
-git push
+bash tools/git-setup-lib.sh <lib-name>
 ```
 
-## 3. Verify
+## 4. Verify
 - Add `NPM_TOKEN` inside github.com/system-core-ui/<lib-name>/settings/secrets/actions
 - Build test:
 ```bash

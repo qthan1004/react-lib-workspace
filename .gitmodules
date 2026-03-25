@@ -25,6 +25,3 @@
 [submodule "libs/menu"]
 	path = libs/menu
 	url = https://github.com/system-core-ui/menu.git
-[submodule "libs/card"]
-	path = libs/card
-	url = git@github.com:system-core-ui/card.git
