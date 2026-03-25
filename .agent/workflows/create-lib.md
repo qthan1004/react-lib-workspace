@@ -1,41 +1,23 @@
 ---
-description: Create a new lib from scratch — scaffold, configure, setup git repo, push
+description: Create a new lib from scratch — scaffold, configure git, push
 ---
 
 // turbo-all
 
 # Create a New Library
 
-Use when creating a brand new library in the monorepo.
-
-## Prerequisites
-- Library name (e.g. `button`, `input`, `select`)
-- `gh` CLI authenticated with access to `system-core-ui` org
-- Check git protocol in use: `grep url .gitmodules | head -1`
-  - SSH: `git@github.com:system-core-ui/<lib>.git`
-  - HTTPS: `https://github.com/system-core-ui/<lib>.git`
-
-## Phase 1 — Scaffold + Apply Templates
-
-1. Generate the library with all configs applied automatically
+## 1. Scaffold
 ```bash
 bash tools/gen-lib.sh <lib-name>
 ```
-> This runs nx scaffold + storybook + copies all templates (tsconfig, vite, package.json, publish.yml)
-> **Note:** If `bash` is not available (e.g. PowerShell), execute the steps in `gen-lib.sh` manually or use Git Bash.
 
-## Phase 2 — Create GitHub repo + Setup Git
-
-2. Create the GitHub repo via `gh` CLI, initialize, and set up the submodule in one go.
+## 2. GitHub & Git Setup
 ```bash
-# Define your variables first
 LIB_NAME="<lib-name>"
-PROTOCOL_URL="<url-matching-.gitmodules-protocol>" # e.g. git@github.com:system-core-ui/<lib-name>.git
+PROTOCOL_URL="<url-matching-.gitmodules-protocol>" # e.g. git@github.com:system-core-ui/<lib>.git
 
-# Create github repo
 gh repo create system-core-ui/$LIB_NAME --public --confirm
 
-# Init lib repo and push
 cd libs/$LIB_NAME
 git init
 git remote add origin $PROTOCOL_URL
@@ -44,7 +26,6 @@ git add .
 git commit -m "feat: initial scaffold for @thanh-libs/$LIB_NAME"
 git push -u origin master
 
-# Register as workspace submodule
 cd ../..
 git submodule add $PROTOCOL_URL libs/$LIB_NAME
 git add .
@@ -52,19 +33,11 @@ git commit -m "chore: add $LIB_NAME submodule"
 git push
 ```
 
-## Phase 4 — Verify
-
-5. **Ask user to configure `NPM_TOKEN` secret** at `github.com/system-core-ui/<lib-name>/settings/secrets/actions`
-
-6. Run a local build test
+## 3. Verify
+- Add `NPM_TOKEN` inside github.com/system-core-ui/<lib-name>/settings/secrets/actions
+- Build test:
 ```bash
 cd libs/<lib-name>
 npm install
 npx vite build
 ```
-
-## Notes
-- `gen-lib.sh` handles everything: nx scaffold + storybook + templates + verification
-- Templates live in `tools/templates/` — update there to change defaults for all future libs
-- The lib is immediately ready for `/publish-lib` workflow after this
-- GitHub repo is created automatically via `gh` CLI — no manual setup needed

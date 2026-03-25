@@ -1,81 +1,41 @@
 ---
-description: Publish a lib to npm via release branch + alpha builds + standard-version
+description: Publish a lib to npm via release branch and standard-version
 ---
 
 // turbo-all
 
-# Publish Lib to npm
+# Publish Lib
 
-Use this workflow to publish a lib (e.g. `utils`, `theme`, `dialog`, `typography`) to npm.
-Uses a release branch with alpha builds for testing before the official publish.
+**0. Pre-checks**: 
+- `bash tools/check-lib-deps.sh <lib-name>` (add missing to package.json)
+- Update `README.md` (installation, API, usage). Commit to master.
 
-> `standard-version` will auto-run **test** (prerelease) and **build** (postbump) before creating the release.
-
-## Phase 0 — Review documentation
-
-0. **Check and update README.md** before publishing:
-   - Read the lib's source code (`src/index.ts`, components, models)
-   - Ensure README covers: installation, requirements/peer deps, API/props, usage examples
-   - If README is missing or outdated, write/update it and commit
-   - Commit doc changes to master BEFORE creating release branch
-
-1. **Run dependency check** to ensure all imports are declared in package.json:
-```bash
-bash tools/check-lib-deps.sh <lib-name>
-```
-> If any missing deps are reported, add them to `devDependencies` and commit to master first.
-
-## Phase 1 — Setup release branch
-
-2. Setup release branch, create alpha build, and push
+## 1. Alpha Release
 ```bash
 cd libs/<lib-name>
 git checkout -b release
 npx standard-version --prerelease alpha
 git push origin release --follow-tags
 ```
+> **STOP**: Wait for Github Actions CI to pass. Fix & repeat if failed.
 
-> If alpha fails or needs fixes: fix the code, commit, then repeat steps 3-4.
-> Each run increments: `v0.0.6-alpha.0` → `v0.0.6-alpha.1` → ...
-
-5. **STOP — Wait for user to confirm CI passed before proceeding**
-> Check CI status at `github.com/system-core-ui/<lib-name>` → Actions tab.
-> If CI failed: fix the issue, commit, and repeat from step 3.
-
-## Phase 3 — Official build
-
-6. Create official release and push
+## 2. Official Release
 ```bash
 npx standard-version
 git push origin release --follow-tags
 ```
+> **STOP**: Wait for Github Actions CI to pass.
 
-8. **STOP — Wait for user to confirm CI passed before cleanup**
-> Check CI status. If CI failed: fix and repeat from step 6.
-
-## Phase 4 — Merge & cleanup (only after user confirms CI passed)
-
-9. Merge release into master, clean up branch, update workspace submodule in one go.
-**(Ensure you have updated RELEASES.md before running this)**
+## 3. Merge & Cleanup
 ```bash
-# Merge and cleanup release branch
 git checkout master
 git merge release
 git push origin master
 git branch -d release
 git push origin --delete release
 
-# Update workspace submodule & commit
 cd ../..
-git add libs/<lib-name>
-git add RELEASES.md
-git commit -m "chore: update <lib-name> submodule to v<version>"
+git add libs/<lib-name> RELEASES.md
+git commit -m "chore: update <lib-name> v<version>"
 git push
 ```
-
-## Important Notes
-- `standard-version` auto-runs test (prerelease) + build (postbump) — if either fails, release is aborted
-- Alpha publishes to npm with `--tag alpha` (install via `@thanh-libs/<lib>@alpha`)
-- Official publishes to npm `latest` tag, then auto-cleans up alpha versions
-- **NEVER delete the release branch until user confirms both alpha AND official CI passed**
-- The lib repo must have `NPM_TOKEN` secret configured

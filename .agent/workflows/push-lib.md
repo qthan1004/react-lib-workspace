@@ -1,31 +1,19 @@
 ---
-description: Push changes inside a lib submodule to its system-core-ui org repo
+description: Push changes inside a single lib submodule and update workspace
 ---
 
 // turbo-all
 
-# Push Lib to system-core-ui
+# Push 1 Lib
 
-Use this workflow when you've made changes inside a lib (e.g. `libs/dialog`, `libs/theme`, etc.).
-Lib changes must be committed and pushed to the **lib's own repo** (under `system-core-ui` org), NOT the workspace repo.
-
-1. Run the entire push process in one script:
 ```bash
 cd libs/<lib-name>
-git status --short
 git add .
 git commit -m "<type>(<scope>): <subject>"
 git push origin master
 
-# Update workspace submodule reference
 cd ../..
 git add libs/<lib-name>
 git commit -m "chore: update <lib-name> submodule"
 git push
 ```
-
-## Important Notes
-- **NEVER** commit lib source code to the workspace repo directly
-- Libs live at `github.com/system-core-ui/<lib-name>` (SSH or HTTPS — check `.gitmodules` for current protocol)
-- The workspace only tracks the submodule commit reference
-- After pushing lib changes, always update the submodule reference in workspace
