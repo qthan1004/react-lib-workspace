@@ -23,6 +23,9 @@
     },
     {
       "path": "./libs/button"
+    },
+    {
+      "path": "./libs/card"
     }
   ],
   "ts-node": {
