@@ -390,6 +390,19 @@ libs/menu/
 │           └── styled.tsx
 ├── package.json
 ├── vite.config.mts
-├── tsconfig.json
 └── tsconfig.lib.json
 ```
+
+---
+
+## 11. Nhật ký xử lý & Trạng thái hiện tại (Đang tiến hành)
+
+**Các thay đổi kiến trúc so với kế hoạch ban đầu:**
+1. **Dropdown/Popover tách riêng:** `Menu` hiện tại được refactor thành **Persistent List** (danh sách cấu trúc cây hiển thị luôn như sidebar). Các tính năng popover/floating sẽ được gom vào component `@thanh-libs/dropdown` sau và phát hành cùng đợt. (Đã xóa `MenuTrigger`, `MenuContent`).
+2. **MenuSub chỉ còn Inline Mode:** Xóa behavior popover hover của sub-menu. `MenuSub` đổi sang click-to-expand (accordion style) sử dụng `MenuSubTrigger` và `MenuSubContent`.
+3. **Auto-expand:** Khi một child `MenuItem` được set `selected={true}`, nó sẽ báo lên context (`registerSelected`) giúp toàn bộ các parent `MenuSub` tự động mở ra ở lần render đầu tiên.
+4. **Soft-select cho Parent:** Khi child đang active, parent `MenuSubTrigger` sẽ nhận background nhạt hơn (`ownerSoftSelected={true}`) và **không in đậm**, giúp phân biệt rõ item đang chọn và danh mục chứa nó. Đã xử lý clear soft-select khi mảng active child rỗng.
+
+**Todo tiếp theo:**
+- Chỉnh sửa nhẹ style của soft-select nếu cần.
+- Review tổng thể Menu khi phát hành cùng Dropdown và tích hợp vào pattern Layout/Sidebar.
