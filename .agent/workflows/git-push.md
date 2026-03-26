@@ -6,9 +6,14 @@ description: Git commit and push workflow with auto-approve for all commands
 
 # Git Commit & Push
 
-1. Stage, commit, and push in one go
+1. Check for changes first
 ```bash
-# Optional: git status --short
+git status --short
+```
+**If output is empty (nothing to commit) → tell the user "Nothing to commit" and STOP. Do NOT proceed.**
+
+2. Stage, commit, and push
+```bash
 git add <files>
 git commit -m "<type>(<scope>): <subject>"
 git push
