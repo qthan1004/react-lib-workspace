@@ -101,9 +101,9 @@ cd "/home/administrator/back up/Personal lib/libs/menu" && npx tsc --noEmit
 
 ## Done Criteria
 
-- [ ] package.json có `@thanh-libs/dialog` và `@floating-ui/react` trong peer + dev deps
-- [ ] models/index.ts có 3 type aliases mới + updated interfaces
-- [ ] constants/index.ts có 3 constants mới
-- [ ] index.ts export 3 type aliases mới
-- [ ] TypeScript compiles without errors
-- [ ] File moved to `plan/tasks/done/`
+- [x] package.json có `@thanh-libs/dialog` và `@floating-ui/react` trong peer + dev deps
+- [x] models/index.ts có 3 type aliases mới + updated interfaces
+- [x] constants/index.ts có 3 constants mới
+- [x] index.ts export 3 type aliases mới
+- [x] TypeScript compiles without errors
+- [x] File moved to `plan/tasks/done/`
