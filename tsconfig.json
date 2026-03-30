@@ -26,6 +26,18 @@
     },
     {
       "path": "./libs/card"
+    },
+    {
+      "path": "./tools/templates"
+    },
+    {
+      "path": "./libs/avatar"
+    },
+    {
+      "path": "./libs/chip"
+    },
+    {
+      "path": "./libs/menu"
     }
   ],
   "ts-node": {
