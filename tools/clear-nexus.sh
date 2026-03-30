@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "🗑️ Deleting package-lock.json files aggressively..."
+find . -name "package-lock.json" -not -path "*/node_modules/*" -delete
+
 echo "Searching for nexus references in the project..."
 
 # Tìm tất cả các file có chứa "nexus" (ngoại trừ node_modules, .git, các file md và sh)
@@ -7,10 +10,8 @@ FILES=$(grep -rlI --include="*" --include=".*" --exclude-dir="node_modules" --ex
 
 if [ -z "$FILES" ]; then
   echo "No nexus references found outside of scripts/workflows."
-  exit 0
-fi
-
-for file in $FILES; do
+else
+  for file in $FILES; do
   echo "Cleaning nexus url in: $file"
   
   # Nếu là file .npmrc, .yarnrc thay thế luôn cấu hình registry
@@ -26,6 +27,16 @@ for file in $FILES; do
   # Replace generic nexus registry URL (như npm-group, npm-public, npm-all...)
   sed -i 's|https://nexus.digi-texx.vn/repository/[^/]\+/|https://registry.npmjs.org/|g' "$file"
   sed -i 's|http://nexus.digi-texx.vn/repository/[^/]\+/|http://registry.npmjs.org/|g' "$file"
-done
+  done
+fi
 
 echo "✅ Successfully cleared nexus URLs!"
+
+echo "📦 Re-installing dependencies..."
+if command -v yarn &> /dev/null; then
+  echo "yarn detected. running yarn install..."
+  yarn install
+else
+  echo "yarn not found. running npm install..."
+  npm install
+fi
