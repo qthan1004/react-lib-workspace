@@ -16,12 +16,15 @@ Tổng hợp chiến lược tối ưu quota khi làm việc với nhiều libs 
 - `styled-theme-convention` — ✅ đã có
 - `component-patterns` — ❌ cần tạo: cách viết React component chuẩn
 - `testing-patterns` — ❌ cần tạo: cách viết test
+- `task-delegation` — ✅ đã có: Planner/Worker protocol, ticket template
 
 ### Workflows (quy trình step-by-step)
 - `/publish-lib` — ✅ đã có: release branch → alpha → official → merge
 - `/push-lib` — ✅ đã có: push 1 lib submodule
 - `/push-all-libs` — ✅ đã có: push tất cả libs
 - `/create-lib` — ❌ cần tạo: scaffold lib mới từ templates
+- `/delegate` — ✅ đã có: Planner mode, tạo atomic task tickets
+- `/save-plan` — ✅ đã có: lưu plan vào `plan/` theo format chuẩn
 
 ### Tools (scripts tự động hóa)
 

@@ -1,38 +1,79 @@
-# Hướng Dẫn: Mô Hình Phân Việc Cho Micro-Agents
+# Hướng Dẫn: Mô Hình Phân Việc Planner → Worker
 
-Để làm một dự án lớn hoặc tính năng phức tạp với AI (Agent) mà không bị "hụt hơi", mất ngữ cảnh (context window) hay tốn nhiều thẻ hạn mức (quota), dự án này áp dụng mô hình "Planner - Worker" (Người Lập Kế Hoạch - Thợ Lập Trình).
+## Ý tưởng cốt lõi
 
-## 1. Quy trình tổng quan 
+Thay vì dùng 1 Agent code toàn bộ feature từ đầu đến cuối (tốn quota, dễ "ngáo"), hệ thống chia thành 2 vai:
 
-Thay vì sử dụng 1 luồng chat (1 cửa sổ Agent) code toàn bộ tính năng từ A đến Z, hệ thống chia làm 2 giai đoạn:
-1. Agent đầu tiên đóng vai Kiến Trúc Sư (**Planner**), chỉ nhận việc rồi tạo các "Tấm phiếu giao việc" siêu nhỏ, sau đó kết thúc luồng.
-2. Bạn (User) liên tục mở các tab chat hoàn toàn mới gọi là các Thợ Lập Trình (**Worker Agent**). Đưa từng tấm phiếu cho từng Thợ đọc và làm.
-
-Thư mục lưu trữ thẻ giao việc:
-- `plan/tasks/todo/`: Việc cần làm.
-- `plan/tasks/done/`: Việc đã hoàn tất.
+- **Planner** — phân tích, lên kế hoạch, tạo ticket. Không code.
+- **Worker** — nhận 1 ticket, code đúng phạm vi, báo xong.
 
 ---
 
-## Bước 1: Dùng Planner Agent để lên lịch và lập phiếu (Tạo Task)
+## Bước 1: Chạy Planner
 
-- Mở 1 Chat mới, ra lệnh: *"Tôi muốn làm form đăng ký người dùng gồm thư viện avatar và thư viện checkbox, bạn chia task ra cho tôi."*
-- Agent sẽ KHÔNG lao vào viết code. Nó sẽ phân tích và sinh ra các file `.md` chứa nhiệm vụ (vd: `01-create-avatar.md`, `02-create-checkbox.md`) ném vào mục `plan/tasks/todo`.
-- Xong bước này nó sẽ báo bạn. Bạn **vui lòng tắt / xóa luôn màn hình chat này đi**.
+Mở Chat mới, gõ:
+
+```
+/delegate [mô tả feature/việc cần làm]
+```
+
+Ví dụ:
+```
+/delegate Fix và cleanup menu lib theo plan 2026-03-30_menu_v0.1
+```
+
+Agent sẽ **không code** — chỉ tạo các file ticket vào `plan/tasks/todo/`, ví dụ:
+
+```
+plan/tasks/todo/
+├── 01-menu-fix-keyboard-nav.md
+├── 02-menu-cleanup-constants.md
+├── 03-menu-remove-dropdown-refs.md
+└── 04-menu-style-polish.md
+```
+
+Xong → tắt Chat Planner đi.
 
 ---
 
-## Bước 2: Dùng Worker Agent để Từng Bước Xây Dựng (Code)
+## Bước 2: Chạy Worker (lần lượt từng ticket)
 
-- Bạn bấm dấu cộng (+) mở 1 Chat HOÀN TOÀN MỚI.
-- Gửi đúng 1 câu lệnh sắc lẹm: *"Tự động đọc nội dung file `plan/tasks/todo/01-create-avatar.md` và code cho tôi"*.
-- Mọi Agent mới đều tự động truy cập `.agent/context.md` để "thấm" văn hoá của Project (như tsconfig, build tools...), cộng thêm Phiếu số 01 mới cung cấp. Nó sẽ cắm mặt vào code.
-- Chạy test, npm run, storybook mượt mà xong xuôi; Agent sẽ tự **move file 01 qua mục /done/**.
-- Bạn nghiệm thu xong thì lại tắt tab chat đó đi, gọi con Chat khác giải quyết file số 02.
+Mở **Chat hoàn toàn mới**, paste đúng 1 câu:
+
+```
+Tự động đọc nội dung file plan/tasks/todo/01-menu-fix-keyboard-nav.md và thực thi cho tôi
+```
+
+Worker sẽ:
+1. Đọc ticket → đọc skills liên quan → code
+2. Chạy test, verify
+3. Move ticket sang `plan/tasks/done/`
+4. Báo bạn kết quả
+
+Xong → tắt Chat Worker đó, mở Chat mới cho ticket tiếp theo.
 
 ---
 
-## Tại sao phải làm cồng kềnh thêm vài bước click chuột?
+## Trạng thái ticket
 
-1. **AI Luôn Tươi Mới (Fresh Context)**: Bất kỳ lập trình viên nào nhồi nhét code suốt 5 tiếng đồng hồ cũng sinh ra mệt mỏi quên trước quên sau. Mở Chat mới làm AI chỉ tập trung đúng file duy nhất -> Code siêu thông minh, không "ngáo".
-2. **Siêu Tiết Kiệm Quota**: Bạn không phải tải/load lại toàn bộ những tin nhắn lịch sử (lên đến 30,000 ký tự rác) vào yêu cầu tiếp theo. Agent đọc xong cái là trả lời đúng trọng tâm. Ở các thư viện to, cách này dễ dàng cứu bạn tới 50% số credit.
+| Thư mục | Ý nghĩa |
+|---------|---------|
+| `plan/tasks/todo/` | Chưa làm |
+| `plan/tasks/done/` | Đã hoàn thành |
+| `plan/tasks/blocked/` | Bị chặn, cần review |
+
+---
+
+## Lưu ý
+
+- **Trước khi `/delegate`**: Cần có plan file trong `plan/` (dùng `/save-plan` để lưu).
+- **Thứ tự ticket**: Làm theo số `NN` — ticket sau có thể phụ thuộc ticket trước.
+- **Worker bị chặn**: Ticket sẽ move sang `blocked/`, Worker ghi lý do → bạn cần điều chỉnh plan rồi tạo lại.
+
+---
+
+## Tại sao phải chia nhỏ?
+
+1. **Fresh context** — Mỗi Worker chỉ đọc 1 ticket, không bị nhiễu bởi lịch sử dài → code chính xác hơn
+2. **Tiết kiệm quota** — Không load lại toàn bộ conversation cũ mỗi lần
+3. **Dễ debug** — Nếu 1 task sai, chỉ cần chạy lại Worker đó

@@ -18,6 +18,12 @@ description: Project structure and conventions to minimize token usage
 - **Git**: Branch `master`. Workspace tracks submodule references.
 - **a11y**: Strict WCAG 2.2 compliance (see `component-patterns`).
 
+## Task Delegation (Planner → Worker)
+- **Workflow**: `/delegate` — kích Planner mode, tạo ticket vào `plan/tasks/todo/`
+- **Skill**: `.agent/skills/task-delegation/SKILL.md` — protocol chi tiết
+- **Template**: `.agent/skills/task-delegation/template.md` — format ticket chuẩn
+- **Directories**: `plan/tasks/todo/` → `done/` | `blocked/`
+
 ## Bulk Tools (`tools/`)
 - Push all libs: `bash tools/push-all-libs.sh "<msg>"`
 - Sync config: `bash tools/sync-config.sh <source> [dest]`
