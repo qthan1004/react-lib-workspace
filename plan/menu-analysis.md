@@ -4,8 +4,7 @@
 
 Menu component dùng để hiển thị **danh sách cấu trúc cây** (persistent inline list) — sidebar navigation, settings panel, accordion-style menu.
 
-> [!NOTE]
-> Floating/popup menu (dropdown actions, account menu, context menu) thuộc về `@thanh-libs/dropdown` — phát hành riêng.
+
 
 **Dependencies sẵn có:**
 - `@thanh-libs/theme` ✅ — design tokens
@@ -300,8 +299,7 @@ Menu là persistent inline list (không có root-level floating). Tuy nhiên **s
 - Inline rendering: keyboard navigation + focus management xử lý nội bộ
 - Sub-menu popover: dùng `@floating-ui/react` cho floating positioning + hover intent
 
-> [!NOTE]
-> `@thanh-libs/dropdown` (root-level floating menu) cũng sẽ dùng `@floating-ui/react`. Menu lib lo inline list + sub-menu (cả 2 mode).
+
 
 ---
 
@@ -336,7 +334,7 @@ Sidebar collapsed có 2 yếu tố:
 
 **Hướng giải quyết sau:**
 - Tạo `@thanh-libs/sidebar` hoặc `@thanh-libs/navigation` riêng
-- Component đó **compose** `Menu` bên trong: expanded → dùng `Menu` (inline list), collapsed → dùng `@thanh-libs/dropdown` trên mỗi icon
+- Component đó **compose** `Menu` bên trong: expanded → dùng `Menu` (inline list), collapsed → hiển thị popover menu trên mỗi icon
 - Menu chỉ cần làm đúng 1 việc: render menu items + handle interactions
 
 > [!NOTE]
@@ -364,7 +362,7 @@ Sidebar collapsed có 2 yếu tố:
 
 - [ ] `MenuCheckboxItem` (toggle)
 - [ ] `MenuRadioGroup` + `MenuRadioItem` (exclusive selection)
-- [ ] Context menu (right-click) → có thể thuộc `@thanh-libs/dropdown`
+- [ ] Context menu (right-click)
 - [ ] Transition/animation
 
 ### Tương lai — Component riêng
@@ -410,11 +408,14 @@ libs/menu/
 ## 11. Nhật ký xử lý & Trạng thái hiện tại (Đang tiến hành)
 
 **Các thay đổi kiến trúc so với kế hoạch ban đầu:**
-1. **Dropdown/Popover tách riêng:** `Menu` hiện tại được refactor thành **Persistent List** (danh sách cấu trúc cây hiển thị luôn như sidebar). Các tính năng popover/floating sẽ được gom vào component `@thanh-libs/dropdown` sau và phát hành cùng đợt. (Đã xóa `MenuTrigger`, `MenuContent`).
+1. **Refactor thành Persistent List:** `Menu` hiện tại được refactor thành **Persistent List** (danh sách cấu trúc cây hiển thị luôn như sidebar). Các tính năng popover/floating đã được tách riêng. (Đã xóa `MenuTrigger`, `MenuContent`).
 2. **MenuSub chỉ còn Inline Mode:** Xóa behavior popover hover của sub-menu. `MenuSub` đổi sang click-to-expand (accordion style) sử dụng `MenuSubTrigger` và `MenuSubContent`.
 3. **Auto-expand:** Khi một child `MenuItem` được set `selected={true}`, nó sẽ báo lên context (`registerSelected`) giúp toàn bộ các parent `MenuSub` tự động mở ra ở lần render đầu tiên.
 4. **Soft-select cho Parent:** Khi child đang active, parent `MenuSubTrigger` sẽ nhận background nhạt hơn (`ownerSoftSelected={true}`) và **không in đậm**, giúp phân biệt rõ item đang chọn và danh mục chứa nó. Đã xử lý clear soft-select khi mảng active child rỗng.
 
 **Todo tiếp theo:**
 - Chỉnh sửa nhẹ style của soft-select nếu cần.
-- Review tổng thể Menu khi phát hành cùng Dropdown và tích hợp vào pattern Layout/Sidebar.
+- Review tổng thể Menu và tích hợp vào pattern Layout/Sidebar.
+
+### 2026-03-30
+- Removed all references to `@thanh-libs/dropdown` — Menu is a standalone persistent list component, not related to dropdown pattern.
