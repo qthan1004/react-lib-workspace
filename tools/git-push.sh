@@ -57,7 +57,7 @@ update_workspace_ref() {
 if [ "$TARGET" = "--all" ]; then
   # Push all libs
   for dir in "$WORKSPACE_ROOT"/libs/*/; do
-    [ ! -d "$dir/.git" ] && continue
+    [ ! -e "$dir/.git" ] && continue
     push_lib "$(basename "$dir")"
   done
   update_workspace_ref
