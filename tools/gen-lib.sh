@@ -27,10 +27,9 @@ cp "${TEMPLATE_DIR}/.storybook/preview.ts" "${LIB_DIR}/.storybook/preview.ts"
 cp "${TEMPLATE_DIR}/.gitignore" "${LIB_DIR}/.gitignore"
 
 
-cp "${TEMPLATE_DIR}/tsconfig.json"           "${LIB_DIR}/tsconfig.json"
-cp "${TEMPLATE_DIR}/tsconfig.lib.json"       "${LIB_DIR}/tsconfig.lib.json"
-cp "${TEMPLATE_DIR}/tsconfig.spec.json"      "${LIB_DIR}/tsconfig.spec.json"
-cp "${TEMPLATE_DIR}/tsconfig.storybook.json" "${LIB_DIR}/tsconfig.storybook.json"
+for tc in tsconfig.json tsconfig.lib.json tsconfig.spec.json tsconfig.storybook.json; do
+  cp "${TEMPLATE_DIR}/${tc}" "${LIB_DIR}/${tc}"
+done
 
 mkdir -p "${LIB_DIR}/.github/workflows"
 cp "${TEMPLATE_DIR}/publish.yml" "${LIB_DIR}/.github/workflows/publish.yml"

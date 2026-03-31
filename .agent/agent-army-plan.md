@@ -20,8 +20,7 @@ Tổng hợp chiến lược tối ưu quota khi làm việc với nhiều libs 
 
 ### Workflows (quy trình step-by-step)
 - `/publish-lib` — ✅ đã có: release branch → alpha → official → merge
-- `/push-lib` — ✅ đã có: push 1 lib submodule
-- `/push-all-libs` — ✅ đã có: push tất cả libs
+- `/git-push` — ✅ đã có: push workspace / 1 lib / all libs (unified)
 - `/create-lib` — ❌ cần tạo: scaffold lib mới từ templates
 - `/delegate` — ✅ đã có: Planner mode, tạo atomic task tickets
 - `/save-plan` — ✅ đã có: lưu plan vào `plan/` theo format chuẩn
@@ -30,10 +29,10 @@ Tổng hợp chiến lược tối ưu quota khi làm việc với nhiều libs 
 
 | Script | Mục đích | Status |
 |--------|----------|--------|
-| `push-all-libs.sh` | Commit + push tất cả libs + workspace | ✅ |
-| `apply-all-libs.sh` | Chạy 1 command cho tất cả libs | ✅ |
-| `sync-config.sh` | Copy template file vào tất cả libs | ✅ |
-| `check-all-libs.sh` | Kiểm tra/inspect file ở tất cả libs | ✅ |
+| `git-push.sh` | Commit + push (workspace / 1 lib / all libs) | ✅ |
+| `apply-all-libs.sh run` | Chạy 1 command cho tất cả libs (fail on error) | ✅ |
+| `apply-all-libs.sh check` | Kiểm tra/inspect file ở tất cả libs (skip errors) | ✅ |
+| `apply-all-libs.sh sync` | Copy file vào tất cả libs | ✅ |
 | `gen-lib.sh` | Scaffold lib mới | ⚠️ cần update templates |
 
 ### Templates (cần tạo)
@@ -64,7 +63,7 @@ User: "tạo lib button"
 1. **Chia conversation theo task** — 1 conv = 1 việc, tránh context phình
 2. **Gom request** — nói hết 1 lần thay vì nhiều message
 3. **Dùng tools thay tool calls** — 1 script = N libs
-4. **Templates > manual edit** — sync-config thay vì edit từng file
+4. **Templates > manual edit** — `apply-all-libs.sh sync` thay vì edit từng file
 5. **Workflows** — agent follow steps, ít suy nghĩ hơn
 
 ## TODO

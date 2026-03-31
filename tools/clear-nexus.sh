@@ -21,12 +21,10 @@ else
   fi
   
   # Replace nexus npm registry repo with public npmjs registry trong các lockfile và code
-  sed -i 's|https://nexus.digi-texx.vn/repository/npm/|https://registry.npmjs.org/|g' "$file"
-  sed -i 's|http://nexus.digi-texx.vn/repository/npm/|http://registry.npmjs.org/|g' "$file"
-  
-  # Replace generic nexus registry URL (như npm-group, npm-public, npm-all...)
-  sed -i 's|https://nexus.digi-texx.vn/repository/[^/]\+/|https://registry.npmjs.org/|g' "$file"
-  sed -i 's|http://nexus.digi-texx.vn/repository/[^/]\+/|http://registry.npmjs.org/|g' "$file"
+  sed -i \
+    -e 's|https\?://nexus.digi-texx.vn/repository/npm/|https://registry.npmjs.org/|g' \
+    -e 's|https\?://nexus.digi-texx.vn/repository/[^/]\+/|https://registry.npmjs.org/|g' \
+    "$file"
   done
 fi
 

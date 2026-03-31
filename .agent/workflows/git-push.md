@@ -1,29 +1,33 @@
 ---
-description: Git commit and push workflow with auto-approve for all commands
+description: Git commit and push — workspace, single lib, or all libs
 ---
 
 // turbo-all
 
-# Git Commit & Push
+# Git Push
 
-1. Check for changes first
-```bash
-git status --short
-```
-**If output is empty (nothing to commit) → tell the user "Nothing to commit" and STOP. Do NOT proceed.**
+Unified push workflow. Pick the right form:
 
-2. Stage, commit, and push
+### Workspace only (no submodule)
 ```bash
-git add <files>
-git commit -m "<type>(<scope>): <subject>"
-git push
+bash tools/git-push.sh "<type>(<scope>): <subject>"
 ```
 
-## Commit Convention Reference
-- `feat(<scope>)`: new feature (minor bump)
-- `fix(<scope>)`: bug fix (patch bump)  
-- `refactor(<scope>)`: code change, no feat/fix
-- `style`: formatting, whitespace
-- `chore`: build, tooling, deps
-- `docs`: documentation
-- `test`: tests
+### Single lib submodule + workspace ref
+```bash
+bash tools/git-push.sh "<type>(<scope>): <subject>" <lib-name>
+```
+
+### All libs + workspace ref
+```bash
+bash tools/git-push.sh "<type>(<scope>): <subject>" --all
+```
+
+> **IMPORTANT**: NEVER commit lib source code to the workspace repo directly. Workspace only tracks submodule refs.
+
+## Commit Convention
+- `feat` → new feature (minor)
+- `fix` → bug fix (patch)
+- `refactor` → code change, no feat/fix
+- `chore` → build, tooling, deps
+- `style` / `docs` / `test`

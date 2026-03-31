@@ -25,7 +25,9 @@ description: Project structure and conventions to minimize token usage
 - **Directories**: `plan/tasks/todo/` → `done/` | `blocked/`
 
 ## Bulk Tools (`tools/`)
-- Push all libs: `bash tools/push-all-libs.sh "<msg>"`
-- Sync config: `bash tools/sync-config.sh <source> [dest]`
-- Publish/Push 1 Lib: Use `/publish-lib` or `/push-lib` workflow.
+- Git push: `bash tools/git-push.sh "<msg>"` (workspace) | `"<msg>" <lib>` (1 lib) | `"<msg>" --all` (all libs)
+- Run cmd all libs: `bash tools/apply-all-libs.sh run '<cmd>'` (fails on error)
+- Check all libs: `bash tools/apply-all-libs.sh check '<cmd>'` (continues on error)
+- Sync config: `bash tools/apply-all-libs.sh sync <source> [dest]`
+- Publish: Use `/publish-lib` workflow.
 - **Timeout Rule**: Stop any command exceeding 30s with no output.
