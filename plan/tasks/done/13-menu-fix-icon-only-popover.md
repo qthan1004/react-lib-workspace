@@ -7,8 +7,7 @@
 
 | Action | Path |
 |--------|------|
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/MenuSub.tsx` |
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/MenuItem.tsx` |
+| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/MenuSubContent.tsx` |
 
 ## What to Do
 
