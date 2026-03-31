@@ -7,8 +7,8 @@
 
 | Action | Path |
 |--------|------|
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/Menu.tsx` |
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/MenuSub.tsx` |
+| MODIFY | `d:/workspace/react-lib-workspace/libs/menu/src/lib/components/Menu.tsx` |
+| MODIFY | `d:/workspace/react-lib-workspace/libs/menu/src/lib/components/MenuSub.tsx` |
 
 ## What to Do
 
@@ -33,10 +33,9 @@
 ## Verification
 
 ```bash
-npm run test menu
+cd d:/workspace/react-lib-workspace && npx nx build menu
 # Open Storybook: "10 - Right Side" (or any floating/popover submenu story).
 # Click/Hover on the inner submenu. Note that parent popup stays OPEN.
-npm run docs menu
 ```
 
 ## Done Criteria

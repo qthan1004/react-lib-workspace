@@ -7,7 +7,7 @@
 
 | Action | Path |
 |--------|------|
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/MenuSubContent.tsx` |
+| MODIFY | `d:/workspace/react-lib-workspace/libs/menu/src/lib/components/MenuSubContent.tsx` |
 
 ## What to Do
 
@@ -28,10 +28,9 @@
 ## Verification
 
 ```bash
-npm run test menu
+cd d:/workspace/react-lib-workspace && npx nx build menu
 # Open Storybook: "Icon-Only Display"
 # Verify hovering over the collapsed sidebar trigger shows a popover box that has FULL TEXT inside it.
-npm run docs menu
 ```
 
 ## Done Criteria

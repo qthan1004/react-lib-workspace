@@ -7,8 +7,8 @@
 
 | Action | Path |
 |--------|------|
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/MenuSub.tsx` |
-| MODIFY | `/home/administrator/back up/Personal lib/libs/menu/src/lib/components/Menu.tsx` (If context/provider needs update) |
+| MODIFY | `d:/workspace/react-lib-workspace/libs/menu/src/lib/components/MenuSub.tsx` |
+| MODIFY | `d:/workspace/react-lib-workspace/libs/menu/src/lib/components/Menu.tsx` (If context/provider needs update) |
 
 ## What to Do
 
@@ -31,10 +31,9 @@
 ## Verification
 
 ```bash
-npm run test menu
+cd d:/workspace/react-lib-workspace && npx nx build menu
 # Open Storybook: "Popover Triggers & Settings".
 # Verify hover is smooth and you can drag mouse diagonally from trigger to popover content without it closing.
-npm run docs menu
 ```
 
 ## Done Criteria
