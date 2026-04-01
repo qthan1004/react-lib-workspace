@@ -27,3 +27,4 @@ Official releases of all libs under `@thanh-libs/*`.
 | 18 | @thanh-libs/dialog | **0.0.2** | **2026-03-23** |
 | 19 | @thanh-libs/chip | **0.0.2** | **2026-03-24** |
 | 20 | @thanh-libs/avatar | **0.0.2** | **2026-03-24** |
+| @thanh-libs/menu | v0.0.2 | 2026-04-01 |
