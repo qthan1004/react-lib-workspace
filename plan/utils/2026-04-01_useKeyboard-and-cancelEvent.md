@@ -1,5 +1,14 @@
 # Utils Enhancement — `useKeyboard` Hook & `cancelEvent` Utility
 
+## Workspace Paths
+
+| Env | Root |
+|-----|------|
+| **Windows** | `d:/workspace/react-lib-workspace` |
+| **Ubuntu** | `/home/administrator/back up/Personal lib` |
+
+> Tất cả file paths trong plan dùng dạng relative từ root: `libs/utils/src/...`, `libs/menu/src/...`
+
 ## Tổng quan
 
 Plan này triển khai phần **① Extract Keyboard Logic → `libs/utils`** từ [menu enhance v0.2](file:///d:/workspace/react-lib-workspace/plan/menu/2026-04-01_enhance_v0.2.md#L9-L78).
