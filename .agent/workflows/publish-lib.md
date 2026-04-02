@@ -57,3 +57,9 @@ cd libs/<lib-name> && git checkout master && git pull origin master && git branc
 ```bash
 bash tools/publish-lib.sh update <lib-name>
 ```
+
+## 7. Clean up
+Xóa các file log tạm sinh ra trong quá trình kiểm tra CI hoặc fix dependencies:
+```bash
+rm -f ci_logs.txt ci2.log package-lock.json
+```
