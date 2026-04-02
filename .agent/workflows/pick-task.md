@@ -32,9 +32,7 @@ Hiển thị bảng task cho user theo format sau. **Chỉ đánh số** các ta
 | (none)                          |                                   |
 
 ### DONE ✅
-| Task                            | File                              |
-|---------------------------------|-----------------------------------|
-| (none)                          |                                   |
+> X task(s) completed.
 
 ---
 👉 Nhập **số** để execute task, hoặc `0` để thoát.
