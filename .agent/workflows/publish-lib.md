@@ -29,14 +29,22 @@ bash tools/publish-lib.sh alpha <lib-name>
 
 ## 3. Tạo PR + Check CI
 - `mcp_github_create_pull_request(owner="system-core-ui", repo=<lib-name>, title="release: <version>", head="release", base="master")` → ghi `pull_number`.
-- Poll `mcp_github_get_pull_request_status` mỗi 60s, max 5 phút.
-- ✅ PASS → Step 4. ❌ FAIL → đọc lỗi, fix, push lại, re-check. ⏳ Timeout → hỏi user.
+- Lấy HEAD SHA: `mcp_github_get_pull_request(owner="system-core-ui", repo=<lib-name>, pull_number=<N>)` → lấy `head.sha`.
+- Poll CI bằng Check Runs API (⚠️ KHÔNG dùng `mcp_github_get_pull_request_status` — tool đó dùng Commit Status API, không đọc được GitHub Actions):
+```bash
+GITHUB_PERSONAL_ACCESS_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN" bash tools/check-ci-status.sh system-core-ui <lib-name> <head-sha> 10 30
+```
+- ✅ exit 0 → Step 4. ❌ exit 1 → đọc lỗi, fix, push lại, re-check. ⏳ exit 2 → hỏi user.
 
 ## 4. Official Release
 ```bash
 bash tools/publish-lib.sh release <lib-name>
 ```
-Poll lại PR status tương tự Step 3. PASS → Step 5.
+Lấy HEAD SHA mới từ release branch rồi poll CI tương tự Step 3:
+```bash
+GITHUB_PERSONAL_ACCESS_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN" bash tools/check-ci-status.sh system-core-ui <lib-name> <new-head-sha> 10 30
+```
+- ✅ PASS → Step 5.
 
 ## 5. Merge
 - `mcp_github_merge_pull_request(owner="system-core-ui", repo=<lib-name>, pull_number=<N>, merge_method="merge")`
