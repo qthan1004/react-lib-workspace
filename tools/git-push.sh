@@ -34,7 +34,8 @@ commit_if_dirty() {
 [ -z "$MSG" ] && fail "Usage: bash tools/git-push.sh \"<message>\" [lib-name|--all]"
 
 push_lib() {
-  local lib="$1" lib_dir="$WORKSPACE_ROOT/libs/$lib"
+  local lib="$1"
+  local lib_dir="$WORKSPACE_ROOT/libs/$lib"
   [ ! -d "$lib_dir" ] && fail "Lib '$lib' not found at $lib_dir"
 
   cd "$lib_dir"
