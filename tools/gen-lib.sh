@@ -23,7 +23,7 @@ npx nx generate @nx/react:library "${LIB_NAME}" \
 npx nx generate @nx/react:storybook-configuration "${IMPORT_PATH}" --no-interactive
 
 mkdir -p "${LIB_DIR}/.storybook"
-cp "${TEMPLATE_DIR}/.storybook/preview.ts" "${LIB_DIR}/.storybook/preview.ts"
+cp "${TEMPLATE_DIR}/.storybook/preview.tsx" "${LIB_DIR}/.storybook/preview.tsx"
 cp "${TEMPLATE_DIR}/.gitignore" "${LIB_DIR}/.gitignore"
 
 
@@ -55,7 +55,7 @@ sed -i "s/{{LIB_NAME}}/${LIB_NAME}/g" "${LIB_DIR}/src/lib/stories/${LIB_NAME}.st
 
 # Verify
 MISSING=0
-for f in tsconfig.json tsconfig.lib.json tsconfig.spec.json tsconfig.storybook.json vite.config.mts package.json LICENSE .gitignore .github/workflows/publish.yml .storybook/preview.ts; do
+for f in tsconfig.json tsconfig.lib.json tsconfig.spec.json tsconfig.storybook.json vite.config.mts package.json LICENSE .gitignore .github/workflows/publish.yml .storybook/preview.tsx; do
   if [ ! -f "${LIB_DIR}/${f}" ]; then MISSING=1; fi
 done
 

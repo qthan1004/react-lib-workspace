@@ -38,6 +38,21 @@
     },
     {
       "path": "./libs/menu"
+    },
+    {
+      "path": "./libs/badge"
+    },
+    {
+      "path": "./libs/slider"
+    },
+    {
+      "path": "./libs/accordion"
+    },
+    {
+      "path": "./libs/tabs"
+    },
+    {
+      "path": "./libs/toast"
     }
   ],
   "ts-node": {

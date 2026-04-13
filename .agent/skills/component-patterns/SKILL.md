@@ -16,7 +16,8 @@ description: React component structure, styled patterns, and naming conventions
 - **Object style ONLY**: `({ prop }): CSSObject => ({ ... })`. No template literals.
 - Prefix custom styled props with `owner` (e.g., `ownerVariant`) to avoid DOM leakage.
 - Suffix all styled components with `Styled` (e.g., `ButtonStyled`).
-- ALWAYS call `const { palette, spacing }: ThemeSchema = useTheme()` inside the callback. DO NOT access `theme` from arguments.
+- ALWAYS include `import { ThemeSchema } from '@thanh-libs/theme';` and `import { useTheme } from '@emotion/react';`
+- ALWAYS call `const { palette, shape }: ThemeSchema = useTheme()` inside the callback. DO NOT access `theme` from arguments.
 
 ## Models & Index
 - Define types extending `HTMLAttributes<HTMLElement>`. Add JSDoc to every prop.

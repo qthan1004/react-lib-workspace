@@ -309,11 +309,11 @@ Snackbar / Toast notification system.
 | 3 | **breadcrumb** | Navigation cơ bản, header |
 | ✅ | **chip** | Đã scaffold, cần publish |
 | 4 | **switch** | Độc lập, đơn giản |
-| 5 | **badge** | Độc lập, dùng với avatar/menu |
-| 6 | **slider** | Độc lập |
+| ✅ | **badge** | Độc lập, dùng với avatar/menu |
+| ✅ | **slider** | Độc lập |
 | 7 | **card** | Độc lập, dùng được ngay |
-| 8 | **accordion** | Độc lập |
-| 9 | **tabs** | Độc lập |
+| ✅ | **accordion** | Độc lập |
+| ✅ | **tabs** | Độc lập |
 | 10 | **toast / snackbar** | Feedback system, phụ thuộc dialog |
 | 11 | **input** | Cần cho select/autocomplete |
 | 12 | **select** | Phụ thuộc input + chip + dialog |
