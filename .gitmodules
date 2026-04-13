@@ -24,10 +24,10 @@
 	url = git@github.com:system-core-ui/avatar.git
 [submodule "libs/menu"]
 	path = libs/menu
-	url = https://github.com/system-core-ui/menu.git
+	url = git@github.com:system-core-ui/menu.git
 [submodule "libs/card"]
 	path = libs/card
-	url = https://github.com/system-core-ui/card.git
+	url = git@github.com:system-core-ui/card.git
 [submodule "libs/accordion"]
 	path = libs/accordion
 	url = git@github.com:system-core-ui/accordion.git
