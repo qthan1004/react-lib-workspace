@@ -40,3 +40,6 @@
 [submodule "libs/tabs"]
 	path = libs/tabs
 	url = git@github.com:system-core-ui/tabs.git
+[submodule "libs/toast"]
+	path = libs/toast
+	url = git@github.com:system-core-ui/toast.git
