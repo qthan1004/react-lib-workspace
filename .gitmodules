@@ -31,3 +31,12 @@
 [submodule "libs/accordion"]
 	path = libs/accordion
 	url = git@github.com:system-core-ui/accordion.git
+[submodule "libs/badge"]
+	path = libs/badge
+	url = git@github.com:system-core-ui/badge.git
+[submodule "libs/slider"]
+	path = libs/slider
+	url = git@github.com:system-core-ui/slider.git
+[submodule "libs/tabs"]
+	path = libs/tabs
+	url = git@github.com:system-core-ui/tabs.git
