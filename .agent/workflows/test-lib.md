@@ -4,6 +4,9 @@ description: Test manual các lib thông qua Storybook — duyệt stories, ghi 
 
 # Test Lib (Manual via Storybook)
 
+> **💡 Khuyến nghị:** Với MCP tools, hãy dùng `/verify-lib` thay thế — tự động hóa cao hơn, tốn ít token hơn, và tự động ghi bug report.
+> Dùng `/test-lib` khi cần test thủ công chuyên sâu hoặc không có MCP browser context.
+
 Khi user gọi `/test-lib <lib-name>`, bạn sẽ test thủ công lib đó qua Storybook.
 
 **Ví dụ:** `/test-lib menu`, `/test-lib dialog`, `/test-lib button`
@@ -22,22 +25,22 @@ libs/<lib-name>/
 
 // turbo
 1c. Đọc source code chính của lib để hiểu API:
-```bash
-find "/home/administrator/back up/Personal lib/libs/<lib-name>/src" -type f \( -name "*.tsx" -o -name "*.ts" \) ! -name "*.stories.*" ! -name "*.spec.*" ! -name "*.test.*" | sort
+```powershell
+Get-ChildItem -Path "d:\workspace\react-lib-workspace\libs\<lib-name>\src" -Recurse -Include "*.tsx","*.ts" | Where-Object { $_.Name -notmatch "\.(stories|spec|test)\." } | Select-Object -ExpandProperty FullName | Sort-Object
 ```
 
 // turbo
 1d. Đọc story files để biết có những story nào:
-```bash
-find "/home/administrator/back up/Personal lib/libs/<lib-name>/src" -name "*.stories.*" -type f
+```powershell
+Get-ChildItem -Path "d:\workspace\react-lib-workspace\libs\<lib-name>\src" -Recurse -Include "*.stories.tsx","*.stories.ts" | Select-Object -ExpandProperty FullName
 ```
 
 1e. Đọc nội dung từng story file để hiểu test scenarios.
 
 // turbo
 1f. Đọc existing tests (nếu có) để biết đã cover gì:
-```bash
-find "/home/administrator/back up/Personal lib/libs/<lib-name>" -name "*.spec.*" -o -name "*.test.*" | sort
+```powershell
+Get-ChildItem -Path "d:\workspace\react-lib-workspace\libs\<lib-name>" -Recurse -Include "*.spec.*","*.test.*" | Select-Object -ExpandProperty FullName | Sort-Object
 ```
 
 Đọc nội dung các test file để nắm scope đã test.
@@ -47,16 +50,12 @@ find "/home/administrator/back up/Personal lib/libs/<lib-name>" -name "*.spec.*"
 Kiểm tra xem Storybook đã chạy sẵn chưa bằng cách thử truy cập:
 
 // turbo
-```bash
-curl -s -o /dev/null -w "%{http_code}" http://localhost:6006
+```powershell
+try { $r = Invoke-WebRequest -Uri "http://localhost:6006" -TimeoutSec 3 -UseBasicParsing; $r.StatusCode } catch { "OFFLINE" }
 ```
 
 - **Nếu trả về `200`** → Storybook đã chạy, **KHÔNG cần start lại**. Truy cập trực tiếp `http://localhost:6006`.
-- **Nếu KHÔNG trả về `200`** → Start Storybook:
-```bash
-cd "/home/administrator/back up/Personal lib" && yarn storybook
-```
-Chờ đến khi server sẵn sàng (port 6006 active).
+- **Nếu OFFLINE** → Báo user start Storybook (xem README của workspace) và chờ port 6006 active.
 
 ## Step 3 — Tạo test plan
 
@@ -174,8 +173,8 @@ Format:
 ```
 
 // turbo
-```bash
-mkdir -p "/home/administrator/back up/Personal lib/plan/test-logs"
+```powershell
+New-Item -ItemType Directory -Force -Path "d:\workspace\react-lib-workspace\plan\test-logs"
 ```
 
 ## Step 6 — Ghi bug report (nếu có FAIL)
